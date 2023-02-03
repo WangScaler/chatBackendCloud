@@ -67,11 +67,6 @@
             <artifactId>chat-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- bootstrap 启动器 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
         <!-- SpringCloud Alibaba Sentinel -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

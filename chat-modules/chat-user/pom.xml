@@ -68,11 +68,6 @@
             <artifactId>chat-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- bootstrap 启动器 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
         <!-- openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
