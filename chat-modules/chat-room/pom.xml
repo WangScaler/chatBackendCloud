@@ -39,7 +39,6 @@
         <dependency>
             <groupId>com.wangscaler</groupId>
             <artifactId>chat-swagger</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- Spring Web -->
         <dependency>
@@ -55,7 +54,6 @@
         <dependency>
             <groupId>com.wangscaler</groupId>
             <artifactId>chat-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- SpringCloud Alibaba Sentinel -->
         <dependency>
@@ -71,7 +69,6 @@
         <dependency>
             <groupId>com.wangscaler</groupId>
             <artifactId>chat-datasource</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

@@ -92,11 +92,35 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-            <!-- 多数据源 -->
+            <!--统一全局chat版本 多数据源 -->
             <dependency>
                 <groupId>com.wangscaler</groupId>
                 <artifactId>chat-datasource</artifactId>
                 <version>${chat.version}</version>
+            </dependency>
+            <!--统一全局chat版本 核心配置类 -->
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-core</artifactId>
+                <version>${chat.version}</version>
+            </dependency>
+            <!--统一全局chat版本 swagger -->
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-swagger</artifactId>
+                <version>${chat.version}</version>
+            </dependency>
+            <!--统一全局chat版本 远程调用 -->
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-openfeign</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <!--统一全局chat版本 网关 -->
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-gateway</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
