@@ -26,3 +26,4 @@ spring:
         # 共享配置
         shared-configs:
           - chat-modules-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

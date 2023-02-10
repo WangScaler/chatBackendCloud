@@ -12,6 +12,7 @@
     <description>聊天室后台微服务版</description>
 
     <properties>
+        <chat.version>0.0.1-SNAPSHOT</chat.version>
         <java.version>1.8</java.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
@@ -25,6 +26,7 @@
         <hutool.version>5.6.1</hutool.version>
         <mybatis.plus.version>3.0.7.1</mybatis.plus.version>
         <druid.version>1.2.15</druid.version>
+        <dynamic-ds.version>3.5.2</dynamic-ds.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -90,14 +92,20 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
+            <!-- 多数据源 -->
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-datasource</artifactId>
+                <version>${chat.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>chat-modules</module>
         <module>chat-common</module>
-        <module>chat-gateway</module>
         <module>chat-openfeign</module>
+        <module>chat-modules</module>
+        <module>chat-gateway</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
@@ -119,6 +127,22 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <repositories>

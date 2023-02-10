@@ -13,12 +13,11 @@
     <name>chat-common</name>
     <description>通用模块</description>
     <packaging>pom</packaging>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+
     <modules>
         <module>chat-swagger</module>
         <module>chat-core</module>
+        <module>chat-datasource</module>
     </modules>
 
 

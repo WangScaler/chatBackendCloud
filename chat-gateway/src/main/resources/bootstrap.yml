@@ -52,3 +52,4 @@ spring:
             ruleType: degrade # flow代表流程控制，degrade代表熔断规则
             username: nacos
             password: nacos
+
