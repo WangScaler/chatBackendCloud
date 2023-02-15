@@ -21,9 +21,12 @@ com.wangscaler
 │       └── chat-core       // 核心模块
 │       └── chat-swagger    // 接口文档
 |       └── chat-datasource // 数据源
+|       └── chat-seata      // 分布式事务
 ├── chat-modules            // 业务模块
 │       └── chat-user       // 用户模块 [9201]
 │       └── chat-room       // 房间模块 [9301]
+|       └── chat-message    // 消息模块 [9401]
+|       └── chat-music      // 音乐模块 [9501]
 ├──pom.xml                  // 公共依赖
 ~~~
 
