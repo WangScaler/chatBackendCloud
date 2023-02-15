@@ -71,6 +71,12 @@
             <artifactId>chat-datasource</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.wangscaler</groupId>
+            <artifactId>chat-seata</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

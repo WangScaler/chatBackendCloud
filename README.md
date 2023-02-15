@@ -14,14 +14,31 @@
 
 ~~~
 com.wangscaler     
-├── chat-ui              // 前端框架 [80]
-├── chat-gateway         // 网关模块 [8080]
-├── chat-openfeign       // 服务调用               
-├── chat-common          // 通用模块
-│       └── chat-core    // 核心模块
-│       └── chat-swagger // 系统接口
-├── chat-modules         // 业务模块
-│       └── chat-user    // 用户模块 [9201]
-│       └── chat-room    // 房间模块 [9300]
-├──pom.xml               // 公共依赖
+├── chat-ui                 // 前端框架 [80]
+├── chat-gateway            // 网关模块 [8080]
+├── chat-openfeign          // 服务调用               
+├── chat-common             // 通用模块
+│       └── chat-core       // 核心模块
+│       └── chat-swagger    // 接口文档
+|       └── chat-datasource // 数据源
+├── chat-modules            // 业务模块
+│       └── chat-user       // 用户模块 [9201]
+│       └── chat-room       // 房间模块 [9301]
+├──pom.xml                  // 公共依赖
 ~~~
+
+## 接口文档
+
+接口文档使用swagger。通过网关gateway统一配置，访问地址http://ip:8080/swagger-ui/index.html
+
+## 数据监控
+
+使用druid动态数据源监控数据库信息。访问地址http://localhost:9201/druid/login.html
+
+## Nacos
+
+nacos配置mysql的地址，启动nacos将自动拉取mysql的配置文件信息。项目启动时拉取nacos的配置文件。
+
+## Sentinel
+
+sentinel降级熔断的配置信息拉取自nacos

@@ -1,18 +1,15 @@
 package com.wangscaler.chatuser.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.wangscaler.chatcore.web.domain.RestResult;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wangscaler.chatopenfeign.clients.RoomClient;
 import com.wangscaler.chatuser.bean.User;
 import com.wangscaler.chatuser.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * <p>
@@ -24,12 +21,9 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
-@RequestMapping("/user")
 public class UserController {
     @Resource
     private UserService userService;
-    @Autowired
-    private RoomClient roomClient;
 
     /**
      * 查询所有的用户
@@ -37,11 +31,21 @@ public class UserController {
      * @return JSONObject json对象
      */
     @GetMapping(value = "/all")
-    public RestResult getUserAllByAdmin(Page<User> page) {
+    public RestResult getUserAllByAdmin() {
         try {
-            IPage<User> userList = userService.page(page);
-            RestResult room = roomClient.findAllRoom();
-            return room;
+            User user = new User();
+            user.setUserPassword("123");
+            user.setUserName("98072422");
+            user.setUserNick("张三");
+            user.setCreatedAt(DateUtil.toLocalDateTime(new Date()));
+            user.setUpdatedAt(DateUtil.toLocalDateTime(new Date()));
+            user.setUserStatus(1);
+            user.setUserSex(1);
+            user.setUserEmail("wangsler@163.com");
+            user.setUserRole("admin");
+            user.setUserSign("没有签名");
+            userService.saveUser(user);
+            return RestResult.success("新增成功");
         } catch (Exception e) {
             log.error(e.getMessage());
             return RestResult.error("查询用户失败");

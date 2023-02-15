@@ -6,6 +6,8 @@ import com.wangscaler.chatroom.mapper.RoomMapper;
 import com.wangscaler.chatroom.service.RoomService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 服务实现类
@@ -16,5 +18,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements RoomService {
+    @Resource
+    private RoomMapper roomMapper;
 
+    @Override
+    public int saveRoom(Room room) {
+        return roomMapper.insert(room);
+    }
 }
