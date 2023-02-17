@@ -1,7 +1,7 @@
 package com.wangscaler.chatuser;
 
-import com.wangscaler.chatopenfeign.annotation.EnableCustomConfig;
-import com.wangscaler.chatopenfeign.annotation.EnableRyFeignClients;
+import com.wangscaler.chatcore.annotation.EnableCustomConfig;
+import com.wangscaler.chatcore.annotation.EnableRyFeignClients;
 import com.wangscaler.chatswagger.annotation.EnableCustomSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

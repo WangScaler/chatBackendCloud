@@ -13,10 +13,10 @@ import com.wangscaler.chatuser.bean.User;
  */
 public interface UserService extends IService<User> {
     /**
-     * 新增用户
+     * 根据用户名查询用户
      *
-     * @param user 用户信息
+     * @param userName 用户名
      * @return 结果
      */
-    public int saveUser(User user);
+    User findOneByUserName(String userName);
 }

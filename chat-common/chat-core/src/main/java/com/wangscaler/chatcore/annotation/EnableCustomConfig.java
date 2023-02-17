@@ -1,8 +1,7 @@
-package com.wangscaler.chatopenfeign.annotation;
+package com.wangscaler.chatcore.annotation;
 
-import com.wangscaler.chatopenfeign.config.ApplicationConfig;
-import com.wangscaler.chatopenfeign.config.FeignAutoConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import com.wangscaler.chatcore.config.ApplicationConfig;
+import com.wangscaler.chatcore.config.FeignAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;

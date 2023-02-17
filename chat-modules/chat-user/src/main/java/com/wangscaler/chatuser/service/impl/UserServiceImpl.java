@@ -1,5 +1,6 @@
 package com.wangscaler.chatuser.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangscaler.chatcore.web.domain.RestResult;
 import com.wangscaler.chatopenfeign.clients.RemoteRoomService;
@@ -24,14 +25,10 @@ import javax.annotation.Resource;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private UserMapper userMapper;
-    @Autowired
-    private RemoteRoomService remoteRoomService;
 
     @Override
-    @GlobalTransactional
-    public int saveUser(User user) {
-        RestResult restResult = remoteRoomService.findAllRoom();
-        int i = userMapper.insert(user);
-        return i;
+    public User findOneByUserName(String userName) {
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", userName));
+        return user;
     }
 }

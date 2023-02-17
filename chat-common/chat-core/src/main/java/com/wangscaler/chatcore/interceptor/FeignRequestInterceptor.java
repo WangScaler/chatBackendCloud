@@ -1,4 +1,4 @@
-package com.wangscaler.chatopenfeign.interceptor;
+package com.wangscaler.chatcore.interceptor;
 
 import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.util.IpUtils;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * feign 请求拦截器
- * 
+ *
  * @author wangscaler
  */
 @Component

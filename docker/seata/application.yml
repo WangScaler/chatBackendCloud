@@ -26,7 +26,7 @@ seata:
     # support: nacos, consul, apollo, zk, etcd3
     type: nacos
     nacos:
-        serverAddr: 192.168.1.31:8848
+        serverAddr: 192.168.1.14:8848
         namespace: public #修改为自己的
         group: SEATA_GROUP #需要与前面创建的配置文件相对应
         username: nacos
@@ -37,7 +37,7 @@ seata:
     # support: nacos, eureka, redis, zk, consul, etcd3, sofa
     type: nacos
     nacos:
-        serverAddr: 192.168.1.31:8848
+        serverAddr: 192.168.1.14:8848
         namespace: public #修改为自己的
         group: SEATA_GROUP
         cluster: DEFAULT

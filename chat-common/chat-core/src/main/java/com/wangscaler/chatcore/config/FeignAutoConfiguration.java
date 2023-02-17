@@ -1,6 +1,6 @@
-package com.wangscaler.chatopenfeign.config;
+package com.wangscaler.chatcore.config;
 
-import com.wangscaler.chatopenfeign.interceptor.FeignRequestInterceptor;
+import com.wangscaler.chatcore.interceptor.FeignRequestInterceptor;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

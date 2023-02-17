@@ -1,4 +1,4 @@
-package com.wangscaler.chatopenfeign.annotation;
+package com.wangscaler.chatcore.annotation;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
