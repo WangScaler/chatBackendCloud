@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableSwagger2
-@EnableWebMvc
 @EnableAutoConfiguration
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 public class SwaggerAutoConfiguration {
