@@ -1,0 +1,55 @@
+# Tomcat
+server:
+  port: 8080
+
+# Spring
+spring: 
+  application:
+    # 应用名称
+    name: chat-gateway
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 192.168.1.11:8848
+      username: nacos
+      password: nacos
+      discovery:
+        # 服务注册地址
+        server-addr: 192.168.1.11:8848
+      config:
+        # 配置中心地址
+        server-addr: 192.168.1.11:8848
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    sentinel:
+      # 取消控制台懒加载
+      eager: true
+      transport:
+        # 控制台地址
+        dashboard: 192.168.1.11:8858
+      # nacos配置持久化
+      datasource:
+        flow:
+          nacos:
+            server-addr: 192.168.1.11:8848
+            dataId: sentinel-flow-gateway
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: gw-flow
+            username: nacos
+            password: nacos
+        grade: #sentinel从nacos获取指定的熔断规则 这个名字可以自定义，不重复就可以
+          nacos:
+            server-addr: 192.168.1.11:8848
+            dataId: sentinel-grade-gateway
+            data-type: json
+            groupId: DEFAULT_GROUP
+            ruleType: degrade # flow代表流程控制，degrade代表熔断规则
+            username: nacos
+            password: nacos
+

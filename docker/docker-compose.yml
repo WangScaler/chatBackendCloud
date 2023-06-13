@@ -1,0 +1,80 @@
+version : '3.8'
+services:
+  chat-nacos:
+    container_name: chat-nacos
+    image: nacos/nacos-server
+    build:
+      context: ./nacos
+    environment:
+      - MODE=standalone
+    volumes:
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/config/application.properties:/home/nacos/conf/application.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    depends_on:
+      - chat-mysql
+  chat-mysql:
+    container_name: chat-mysql
+    image: mysql:8.0
+    build:
+      context: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/logs:/logs
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/db:/docker-entrypoint-initdb.d
+    command: [
+      'mysqld',
+      '--innodb-buffer-pool-size=80M',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1',
+      '--default-authentication-plugin=mysql_native_password',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_general_ci'
+    ]
+    environment:
+      MYSQL_DATABASE: 'chat-config'
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_HOST: '%'
+  chat-redis:
+    container_name: chat-redis
+    image: redis
+    build:
+      context: ./redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/conf/redis.conf:/home/chat/redis/redis.conf
+      - ./redis/data:/data
+    command: redis-server /home/chat/redis/redis.conf
+  chat-sentinel:
+    container_name: chat-sentinel
+    image: bladex/sentinel-dashboard
+    build:
+      context: ./sentinel
+    environment:
+      JAVA_OPTS: "-Dserver.port=8858 -Dcsp.sentinel.dashboard.server=localhost:8858 -Dproject.name=sentinel-dashboard -Djava.security.egd=file:/dev/./urandom -Dcsp.sentinel.api.port=8719"
+    ports:
+      - "8858:8858"
+      - "8719:8719"
+  chat-seata:
+    container_name: chat-seata
+    image: seataio/seata-server
+    ports:
+      - "8091:8091"
+    environment:
+      #seata-server启动的IP，用于向注册中心注册使用，默认使用容器IP可能无法与客户端通讯；。
+      - SEATA_IP=192.168.1.11
+      - SEATA_PORT=8091
+      - STORE_MODE=db
+    volumes:
+      - ./seata/application.yml:/seata-server/resources/application.yml
+      - ./seata/mysql-connector-j-8.0.31.jar:/seata-server/libs/mysql-connector-j-8.0.31.jar
