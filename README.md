@@ -11,6 +11,7 @@
 - 服务降级熔断、流量控制Sentinel
 - 分布式事务选型Seata。
 - 前端项目改自[Nine-chat-frontend](https://github.com/longyanjiang/Nine-chat-frontend)
+- 后端项目借鉴[若依](https://github.com/yangzongzhuan/RuoYi-Cloud)
 
 ## 系统模块
 

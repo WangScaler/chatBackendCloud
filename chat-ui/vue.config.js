@@ -3,7 +3,7 @@ const path = require('path');
 function resolve(dir) {
 	return path.join(__dirname, dir);
 }
-const port = 8080;
+const port = 8081;
 
 module.exports = {
 	publicPath: '/',
@@ -23,6 +23,15 @@ module.exports = {
 		overlay: {
 			warnings: false,
 			errors: true
+		},
+		proxy: { // 配置跨域
+			'/chat': {
+				target: `http://localhost:8080`, //请求后台接口
+				changeOrigin: true, // 允许跨域
+				pathRewrite: {
+					'^/chat': "" // 重写请求
+				}
+			}
 		}
 	},
 	configureWebpack: {
