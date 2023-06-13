@@ -42,7 +42,7 @@ public class UserController {
      *
      * @return JSONObject json对象
      */
-    @PostMapping(value = "/registry")
+    @PostMapping(value = "/register")
     @ApiOperation(value = "注册")
     public RestResult registry(@RequestBody UserInfoDTO user) {
         try {

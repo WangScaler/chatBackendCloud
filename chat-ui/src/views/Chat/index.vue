@@ -74,7 +74,6 @@ export default {
     MusicPlayer,
     ChatProgress,
     PreImg,
-    // bulletChat,
     Barrage
   },
   data() {
