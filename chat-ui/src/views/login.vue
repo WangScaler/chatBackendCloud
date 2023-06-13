@@ -3,27 +3,26 @@
 		<div class="login-container">
 			<div class="logo">
 				<img src="../assets/logo.gif" />
-				<span class="logo-name">小九音乐聊天室</span>
+				<span class="logo-name">音乐聊天室</span>
 			</div>
 
 			<div class="form">
 				<el-form ref="loginForm" :model="form" :rules="rules">
 					<el-form-item prop="user_name">
-						<el-input v-model="form.user_name" clearable placeholder="您的账户或邮箱" size="medium"></el-input>
+						<el-input v-model="form.userName" clearable placeholder="您的账户或邮箱" size="medium"></el-input>
 					</el-form-item>
 					<el-form-item prop="user_password">
-						<el-input v-model="form.user_password" clearable show-password placeholder="您的账户密码" size="medium" @keyup.native.enter="login"></el-input>
+						<el-input v-model="form.userPassword" clearable show-password placeholder="您的账户密码" size="medium" @keyup.native.enter="login"></el-input>
 					</el-form-item>
 				</el-form>
 			</div>
 
 			<div class="links">
 				<a @click="foegetPassword">忘记密码</a>
-				<!-- <a @click="testLogin">使用测试账号登录</a> -->
 				<a @click="$router.push('/register')">注册账号</a>
 			</div>
 
-			<el-button style="width: 100%" type="primary" size="medium" @click="login">登录小九聊天室</el-button>
+			<el-button style="width: 100%" type="primary" size="medium" @click="login">登录</el-button>
 		</div>
 	</div>
 </template>
@@ -36,15 +35,15 @@ export default {
   data() {
     return {
       form: {
-        user_name: "",
-        user_password: "",
+        userName: "",
+        userPassword: "",
       },
       rules: {
-        user_name: [
+        userName: [
           { required: true, message: "请输入您的账号", trigger: "blur" },
-          { min: 1, max: 8, message: "长度在 1 到 16 个字符", trigger: "blur" },
+          { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: "blur" },
         ],
-        user_password: [
+        userPassword: [
           { required: true, message: "请输入您的账户密码", trigger: "blur" },
           {
             min: 6,
@@ -59,9 +58,9 @@ export default {
   computed: {},
   watch: {},
   created() {
-    localStorage.user_name && (this.form.user_name = localStorage.user_name);
-    localStorage.user_password &&
-      (this.form.user_password = localStorage.user_password);
+    localStorage.userName && (this.form.userName = localStorage.userName);
+    localStorage.userPassword &&
+      (this.form.userPassword = localStorage.userPassword);
   },
   mounted() {},
   methods: {
@@ -69,24 +68,16 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         if (!valid) return;
         const { data } = await login(this.form);
-        const { token } = data;
-        localStorage.chat_token = token;
+        localStorage.chatToken = data;
+        const { userName, userPassword } = this.form;
+        localStorage.userName = userName;
+        localStorage.userPassword = userPassword;
         this.$router.push("/");
-        const { user_name, user_password } = this.form;
-        localStorage.user_name = user_name;
-        localStorage.user_password = user_password;
       });
     },
-
     foegetPassword() {
-      return this.$message.warning("都没邮箱验证，你找不回密码洛！");
-    },
-
-    testLogin() {
-      this.form.user_name = "test";
-      this.form.user_password = "123456";
-      this.login();
-    },
+      return this.$message.warning("暂不支持！");
+    }
   },
 };
 </script>

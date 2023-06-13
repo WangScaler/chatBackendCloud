@@ -3,27 +3,27 @@
 		<div class="login-container">
 			<div class="logo">
 				<img src="../assets/logo.gif" />
-				<span class="logo-name">小九音乐聊天室</span>
+				<span class="logo-name">音乐聊天室</span>
 			</div>
 
 			<div class="form">
 				<el-form ref="registerForm" :model="form" :rules="rules">
 					<el-form-item prop="user_name">
-						<el-input v-model="form.user_name" clearable placeholder="您的账号" size="medium"></el-input>
+						<el-input v-model="form.userName" clearable placeholder="您的账号" size="medium"></el-input>
 					</el-form-item>
 					<el-form-item prop="user_nick">
-						<el-input v-model="form.user_nick" clearable placeholder="您的昵称" size="medium"></el-input>
+						<el-input v-model="form.userNick" clearable placeholder="您的昵称" size="medium"></el-input>
 					</el-form-item>
 					<el-form-item prop="user_email">
-						<el-input v-model="form.user_email" clearable placeholder="您的邮箱" size="medium"></el-input>
+						<el-input v-model="form.userEmail" clearable placeholder="您的邮箱" size="medium"></el-input>
 					</el-form-item>
 					<el-form-item prop="user_password">
-						<el-input v-model="form.user_password" clearable show-password placeholder="您的账户密码" size="medium" @keyup.native.enter="register"></el-input>
+						<el-input v-model="form.userPassword" clearable show-password placeholder="您的账户密码" size="medium" @keyup.native.enter="register"></el-input>
 					</el-form-item>
 				</el-form>
 			</div>
 
-			<el-button style="width: 100%" type="primary" size="medium" @click="register">注册并登录聊天室</el-button>
+			<el-button style="width: 100%" type="primary" size="medium" @click="register">注册&登录</el-button>
 			<div class="links">
 				<a @click="$router.push('/login')">已有账号去登录</a>
 			</div>
@@ -39,22 +39,22 @@ export default {
   data() {
     return {
       form: {
-        user_name: null,
-        user_nick: null,
-        user_email: null,
-        user_password: null,
-        user_password2: null,
+        userName: null,
+        userNick: null,
+        userEmail: null,
+        userPassword: null,
+        userPassword2: null,
       },
       rules: {
-        user_name: [
+        userName: [
           { required: true, message: "请输入您的账号", trigger: "blur" },
-          { min: 1, max: 8, message: "长度在1至10个字符", trigger: "blur" },
+          { min: 1, max: 8, message: "长度在1至8个字符", trigger: "blur" },
         ],
-        user_nick: [
+        userNick: [
           { required: true, message: "请输入您的昵称", trigger: "blur" },
           { min: 1, max: 8, message: "长度在1到8个字符", trigger: "blur" },
         ],
-        user_email: [
+        userEmail: [
           { required: true, message: "请输入您的邮箱", trigger: "blur" },
           {
             type: "email",
@@ -62,7 +62,7 @@ export default {
             trigger: ["blur", "change"],
           },
         ],
-        user_password: [
+        userPassword: [
           { required: true, message: "请输入您的账户密码", trigger: "blur" },
           { min: 6, max: 32, message: "长度在6到32个字符", trigger: "blur" },
         ],
@@ -80,10 +80,8 @@ export default {
         await register(this.form);
         this.$message.success("注册成功，即将登录！");
         setTimeout(async () => {
-          const { user_name, user_password } = this.form;
-          const { data } = await login({ user_name, user_password });
-          const { token } = data;
-          localStorage.chat_token = token;
+          const { data } = await login(this.form);
+          localStorage.chat_token = data;
           this.$router.push("/");
           this.$message.success("登录成功!");
         }, 1000);
