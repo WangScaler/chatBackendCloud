@@ -35,5 +35,4 @@ build/
 /docker/redis/data/*.rdb
 /docker/nacos/logs
 /docker/mysql/data
-/chat-ui
 

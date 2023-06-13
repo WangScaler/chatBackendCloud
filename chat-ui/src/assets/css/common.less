@@ -1,0 +1,216 @@
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex_between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex_start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex_end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+body {
+  font-family: "webfont" !important;
+  cursor: url(https://file.jiangly.com/images/34113113.png),default;
+}
+
+::selection {
+  color: #fff;
+  background: @colorSuccess;
+  text-shadow: none;
+}
+
+input.common-input {
+  width: 100%;
+  outline: none;
+  margin: 5px 0;
+  padding: 0 10px;
+  line-height: 40px;
+  height: 40px;
+  font-size: 14px;
+  background-color: @colorBgBody;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+input.common-input:hover {
+  background-color: lighten(@colorBgBody, 2%);
+}
+
+input.common-input:focus {
+  border-color: @colorInfo;
+}
+
+textarea.common-textarea {
+  width: 100%;
+  outline: none;
+  margin: 5px 0;
+  padding: 10px;
+  font-size: 14px;
+  background-color: @colorBgBody;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  min-height: 40px;
+  min-height: 100px;
+}
+
+textarea.common-textarea:hover {
+  background-color: lighten(@colorBgBody, 2%);
+}
+
+textarea.common-textarea:focus {
+  border-color: @colorInfo;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.s-1-line{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.m_l5{
+  margin-left: 5px;
+}
+
+.m_l10{
+  margin-left: 10px;
+}
+
+.m_l15{
+  margin-left: 15px;
+}
+
+.m_l20{
+  margin-left: 20px;
+}
+
+.m_l30{
+  margin-left: 30px;
+}
+
+.m_r5{
+  margin-right: 5px;
+}
+
+.m_r10{
+  margin-right: 10px;
+}
+
+.m_r15{
+  margin-right: 15px;
+}
+
+.m_r20{
+  margin-right: 20px;
+}
+
+.m_r30{
+  margin-top: 30px;
+}
+
+.m_t5{
+  margin-top: 5px;
+}
+
+.m_t10{
+  margin-top: 10px;
+}
+
+.m_t15{
+  margin-top: 15px;
+}
+
+.m_t20{
+  margin-top: 20px;
+}
+
+.m_t30{
+  margin-top: 30px;
+}
+
+.m_b5{
+  margin-bottom: 5px;
+}
+
+.m_b10{
+  margin-bottom: 10px;
+}
+
+.m_b15{
+  margin-bottom: 15px;
+}
+
+.m_b20{
+  margin-bottom: 20px;
+}
+
+.m_b30{
+  margin-bottom: 30px;
+}
+
+/* element 全局样式修改 */
+
+/* 抽屉颜色 */
+.el-drawer, .el-dialog, .el-message-box{
+  background-color:  @message-drawer-bg-color !important;
+}
+
+.el-message-box{
+  border: 1px solid @message-drawer-bg-color !important;
+}
+
+.el-drawer__open .el-drawer.rtl{
+  background-color: rgba(@message-drawer-bg-color, .8);
+}
+
+.el-form-item__label, .el-radio, .el-drawer__header, .el-dialog__title, .el-message-box__content, .el-message-box__title, .el-popover__title{
+  color: @message-main-text-color !important;
+}
+.el-popover__title{
+  font-weight: 600 !important;
+}
+
+/* wxPre */
+.el-popover{
+  background: @message-popup-bg-color !important;
+  border-color: @message-popup-bg-color !important;
+}
+.el-popper .popper__arrow{
+  border-width: 0 !important;
+}
+.el-popper .popper__arrow::after{
+  border-width: 0 !important;
+}
+
+/* 弹窗 */
+.el-dialog__body{
+  padding: 10px 20px !important;
+}
+
+/* 去掉dropdown的三角 */
+.popper__arrow{
+  top: 0 !important;
+}
+
+/* 改变dropdown位置 */
+.el-popper[x-placement^=bottom]{
+  margin-top: -15px !important;
+}
