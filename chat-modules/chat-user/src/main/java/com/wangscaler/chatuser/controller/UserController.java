@@ -28,7 +28,6 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
-@RequestMapping("/user")
 public class UserController {
     @Resource
     private UserService userService;
