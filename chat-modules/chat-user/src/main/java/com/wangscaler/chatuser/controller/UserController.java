@@ -3,10 +3,13 @@ package com.wangscaler.chatuser.controller;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatcore.constant.SecurityConstants;
+import com.wangscaler.chatcore.constant.TokenConstants;
 import com.wangscaler.chatcore.util.AESEncryptUtils;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
 import com.wangscaler.chatcore.web.domain.RestResult;
+import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatuser.bean.User;
 import com.wangscaler.chatuser.model.UserDTO;
 import com.wangscaler.chatuser.model.UserInfoDTO;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -35,6 +38,8 @@ import java.io.Serializable;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private RedisService redisService;
     final private String[] avatarImages = {
             "https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
             "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202004%2F15%2F20200415141655_ihkmq.png&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999"
@@ -81,9 +86,7 @@ public class UserController {
             userInfo.setUserPassword(AESEncryptUtils.decrypt(userInfo.getUserPassword()));
             if (ObjectUtil.isNotEmpty(userInfo) && user.getUserPassword().equals(userInfo.getUserPassword())) {
                 String token = JWTtokenUtils.generateToken(userInfo.getId(), userInfo.getUserName(), userInfo.getUserNick(), userInfo.getUserEmail(), userInfo.getUserRole());
-                // TODO
-                // 将token存在redis中,并设置和token相同的过期时间
-                // 从而在网关验证token的合法性
+                redisService.setCacheObject(RedisConstants.TOKEN+userInfo.getId(),token, TokenConstants.EXPIRE, TimeUnit.DAYS);
                 return RestResult.success("登陆成功", token);
             }
             return RestResult.error("登录失败");

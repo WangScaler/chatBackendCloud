@@ -2,12 +2,14 @@ package com.wangscaler.chatgateway.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.constant.TokenConstants;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
 import com.wangscaler.chatcore.util.ServletUtils;
 import com.wangscaler.chatcore.util.StringUtils;
 import com.wangscaler.chatgateway.properties.IgnoreWhiteProperties;
+import com.wangscaler.chatredis.service.RedisService;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
     // 排除过滤的 uri 地址，nacos自行添加
     @Autowired
     private IgnoreWhiteProperties ignoreWhite;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -46,8 +50,10 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             if (claims == null) {
                 return unauthorizedResponse(exchange, "令牌已过期或验证不正确！");
             }
-            // TODO
-            // 从redis中验证token的合法性
+            boolean tokenFlag = redisService.hasKey(RedisConstants.TOKEN + JWTtokenUtils.getUserId(claims));
+            if (!tokenFlag) {
+                return unauthorizedResponse(exchange, "令牌已过期或错误！");
+            }
             return chain.filter(exchange);
         }
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

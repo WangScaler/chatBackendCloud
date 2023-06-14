@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>chat-common</artifactId>
+        <groupId>com.wangscaler</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <groupId>com.wangscaler</groupId>
+    <artifactId>chat-redis</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>chat-redis</name>
+    <description>redis缓存服务</description>
+    <dependencies>
+        <!-- SpringBoot Boot Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--Core-->
+        <dependency>
+            <groupId>com.wangscaler</groupId>
+            <artifactId>chat-core</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -22,4 +22,9 @@ public class TokenConstants
      */
     public final static String SECRET = "wangscaler202302relacsgnaw";
 
+    /**
+     * 令牌过期时间
+     */
+    public final static Long EXPIRE = 1L;
+
 }

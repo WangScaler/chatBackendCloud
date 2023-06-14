@@ -19,6 +19,7 @@
         <module>chat-core</module>
         <module>chat-datasource</module>
         <module>chat-seata</module>
+        <module>chat-redis</module>
     </modules>
 
 

@@ -57,6 +57,10 @@
             <groupId>com.wangscaler</groupId>
             <artifactId>chat-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wangscaler</groupId>
+            <artifactId>chat-redis</artifactId>
+        </dependency>
         <!-- openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -88,7 +92,6 @@
         <dependency>
             <groupId>com.wangscaler</groupId>
             <artifactId>chat-seata</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>

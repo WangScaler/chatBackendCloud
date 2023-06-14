@@ -114,13 +114,23 @@
             <dependency>
                 <groupId>com.wangscaler</groupId>
                 <artifactId>chat-openfeign</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${chat.version}</version>
             </dependency>
             <!--统一全局chat版本 网关 -->
             <dependency>
                 <groupId>com.wangscaler</groupId>
                 <artifactId>chat-gateway</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${chat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-redis</artifactId>
+                <version>${chat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-seata</artifactId>
+                <version>${chat.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -130,6 +140,7 @@
         <module>chat-openfeign</module>
         <module>chat-modules</module>
         <module>chat-gateway</module>
+        <module>chat-common/chat-redis</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
