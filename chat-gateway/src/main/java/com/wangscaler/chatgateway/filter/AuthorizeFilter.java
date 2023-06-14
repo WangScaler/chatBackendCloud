@@ -3,6 +3,7 @@ package com.wangscaler.chatgateway.filter;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.wangscaler.chatcore.constant.SecurityConstants;
+import com.wangscaler.chatcore.constant.TokenConstants;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
 import com.wangscaler.chatcore.util.ServletUtils;
 import com.wangscaler.chatcore.util.StringUtils;
@@ -40,8 +41,8 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         if (StrUtil.isEmpty(authorization)) {
             return unauthorizedResponse(exchange, "令牌不能为空");
         }
-        if (authorization.startsWith("JWT ")) {
-            Claims claims = JWTtokenUtils.parseToken(authorization.substring(4));
+        if (authorization.startsWith(TokenConstants.PREFIX)) {
+            Claims claims = JWTtokenUtils.parseToken(JWTtokenUtils.replaceTokenPrefix(authorization));
             if (claims == null) {
                 return unauthorizedResponse(exchange, "令牌已过期或验证不正确！");
             }

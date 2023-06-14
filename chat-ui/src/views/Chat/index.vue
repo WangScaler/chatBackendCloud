@@ -56,13 +56,11 @@ import MessagePanel from "@/components/Chat/MessagePanel";
 import MusicPlayer from "@/components/Chat/MusicPlayer";
 import ChatProgress from "@/components/Chat/ChatProgress";
 import PreImg from "@/components/PreImg";
-// import bulletChat from '@/components/BulletChat'
 import Barrage from '@/components/Barrage'
 import { setTheme } from "@/theme";
-
 import { history } from "@/api/chat";
 import config from "@/config/index";
-
+import { getToken } from '@/utils/auth';
 const { default_room_bg } = config;
 
 export default {
@@ -275,7 +273,7 @@ export default {
 
     /* 初始化ws需要参数携带token room_id 地址 前去校验 连接后挂载在全局 */
     async initSocket() {
-      const token = localStorage.chat_token;
+      const token = getToken()
       if (!window.returnCitySN && this.count<= 3) {
         this.count++
         setTimeout(() => this.initSocket(), 50);

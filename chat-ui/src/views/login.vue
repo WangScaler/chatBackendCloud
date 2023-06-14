@@ -29,6 +29,7 @@
 
 <script>
 import { login } from "@/api/user";
+import { setToken } from '@/utils/auth';
 
 export default {
   components: {},
@@ -67,12 +68,19 @@ export default {
     login() {
       this.$refs.loginForm.validate(async (valid) => {
         if (!valid) return;
-        const { data } = await login(this.form);
-        localStorage.chatToken = data;
-        const { userName, userPassword } = this.form;
-        localStorage.userName = userName;
-        localStorage.userPassword = userPassword;
-        this.$router.push("/");
+        await login(this.form).then((res) => {
+			if (res.code != 200) {
+				this.$message.error(res.msg);
+				return
+			}
+			setToken(res.data)
+			localStorage.userName = this.form.userName;
+			localStorage.userPassword = this.form.userPassword;
+			this.$router.push("/");
+		})
+		.catch((err) => {
+			console.log(err);
+		})
       });
     },
     foegetPassword() {

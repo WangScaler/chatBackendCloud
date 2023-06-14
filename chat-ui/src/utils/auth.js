@@ -1,4 +1,4 @@
-const TokenKey = 'chat_token';
+const TokenKey = 'chatToken';
 
 export function getToken() {
 	return localStorage.getItem(TokenKey);

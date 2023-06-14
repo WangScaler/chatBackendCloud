@@ -3,6 +3,7 @@ package com.wangscaler.chatuser.controller;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.util.AESEncryptUtils;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
 import com.wangscaler.chatcore.web.domain.RestResult;
@@ -10,6 +11,7 @@ import com.wangscaler.chatuser.bean.User;
 import com.wangscaler.chatuser.model.UserDTO;
 import com.wangscaler.chatuser.model.UserInfoDTO;
 import com.wangscaler.chatuser.service.UserService;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -76,7 +80,7 @@ public class UserController {
             User userInfo = userService.findOneByUserName(user.getUserName());
             userInfo.setUserPassword(AESEncryptUtils.decrypt(userInfo.getUserPassword()));
             if (ObjectUtil.isNotEmpty(userInfo) && user.getUserPassword().equals(userInfo.getUserPassword())) {
-                String token = JWTtokenUtils.getToken(userInfo.getId(), userInfo.getUserName(), userInfo.getUserNick(), userInfo.getUserEmail(), userInfo.getUserRole());
+                String token = JWTtokenUtils.generateToken(userInfo.getId(), userInfo.getUserName(), userInfo.getUserNick(), userInfo.getUserEmail(), userInfo.getUserRole());
                 // TODO
                 // 将token存在redis中,并设置和token相同的过期时间
                 // 从而在网关验证token的合法性
@@ -96,14 +100,11 @@ public class UserController {
      */
     @GetMapping(value = "/getInfo")
     @ApiOperation(value = "查询所有的用户")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "用户id", required = true, paramType = "query", dataType = "String")})
-    public RestResult getInfo(String id) {
+    public RestResult getInfo(HttpServletRequest request) {
         try {
-            if (StrUtil.isEmpty(id)) {
-                return RestResult.error("参数有误");
-            }
-            User userInfo = userService.getById(id);
+            String token = JWTtokenUtils.getToken(request);
+            Claims claims = JWTtokenUtils.parseToken(token);
+            User userInfo = userService.getById(JWTtokenUtils.getUserId(claims));
             return RestResult.success(userInfo);
         } catch (Exception e) {
             log.error(e.getMessage());

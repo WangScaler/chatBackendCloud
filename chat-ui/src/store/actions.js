@@ -1,6 +1,7 @@
 import { getInfo } from '@/api/user';
 import { queryRoomInfo } from '@/api/chat';
 import router from '../router/index';
+import { removeToken } from '@/utils/auth';
 
 export default {
 	/* 获取用户信息 */
@@ -27,7 +28,7 @@ export default {
 	/* 退出登录 */
 	async logout({ commit }) {
 		return new Promise(resolve => {
-			localStorage.removeItem('chat_token');
+			removeToken();
 			commit('setToken', null);
 			commit('resetStore');
 			router.push('/login');
