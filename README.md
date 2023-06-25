@@ -10,8 +10,8 @@
 - 服务调用OpenFeign
 - 服务降级熔断、流量控制Sentinel
 - 分布式事务选型Seata。
-- 前端项目改自[Nine-chat-frontend](https://github.com/longyanjiang/Nine-chat-frontend)
-- 后端项目借鉴[若依](https://github.com/yangzongzhuan/RuoYi-Cloud)
+- 前端项目改自开源项目[Nine-chat-frontend](https://github.com/longyanjiang/Nine-chat-frontend)
+- 后端项目借鉴优秀开源框架[若依](https://github.com/yangzongzhuan/RuoYi-Cloud) 、 [JeecgBoot](https://github.com/jeecgboot/jeecg-boot)
 
 ## 系统模块
 
@@ -25,6 +25,7 @@ com.wangscaler
 │       └── chat-swagger    // 接口文档
 |       └── chat-datasource // 数据源
 |       └── chat-seata      // 分布式事务
+|       └── chat-websoket   // websocket[9201]
 ├── chat-modules            // 业务模块
 │       └── chat-user       // 用户模块 [9201]
 │       └── chat-room       // 房间模块 [9301]
@@ -49,6 +50,10 @@ nacos配置mysql的地址，启动nacos将自动拉取mysql的配置文件信息
 
 sentinel降级熔断的配置信息拉取自nacos
 
+## WebSocket
+
+挂载在用户模块上,所以通过用户模块的端口进行连接
+
 ## 构建步骤
 
 默认前提有docker环境
@@ -68,3 +73,9 @@ sentinel降级熔断的配置信息拉取自nacos
 - 运行chat-room下的ChatRoomApplication聊天室服务
 
 - 运行chat-user下的ChatUserApplication用户服务
+
+### 注意
+
+因为前端项目来自开源项目，需要随着后端的开发逐步整合。目前以整合完毕
+- 注册
+- 登录

@@ -1,6 +1,7 @@
 package com.wangscaler.chatredis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -50,5 +51,9 @@ public class RedisService {
      */
     public Boolean hasKey(String key) {
         return redisTemplate.hasKey(key);
+    }
+
+    public void convertAndSend(String channel, Object message) {
+        redisTemplate.convertAndSend(channel, message);
     }
 }

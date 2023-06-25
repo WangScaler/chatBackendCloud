@@ -27,6 +27,7 @@
         <mybatis.plus.version>3.0.7.1</mybatis.plus.version>
         <druid.version>1.2.15</druid.version>
         <dynamic-ds.version>3.5.2</dynamic-ds.version>
+        <websocket.version>2.6.6</websocket.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -132,6 +133,11 @@
                 <artifactId>chat-seata</artifactId>
                 <version>${chat.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.wangscaler</groupId>
+                <artifactId>chat-websocket</artifactId>
+                <version>${chat.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -141,6 +147,7 @@
         <module>chat-modules</module>
         <module>chat-gateway</module>
         <module>chat-common/chat-redis</module>
+        <module>chat-common/chat-websocket</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>

@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.wangscaler.chatredis.config.RedisConfig,\
-com.wangscaler.chatredis.service.RedisService
+com.wangscaler.chatredis.service.RedisService,\
+com.wangscaler.chatredis.listener.RedisReceiver

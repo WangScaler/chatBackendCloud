@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.wangscaler.chatsocket.config.WebSocketConfig,\
+com.wangscaler.chatsocket.websocket.WebSocket
