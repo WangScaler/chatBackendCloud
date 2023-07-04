@@ -234,17 +234,15 @@
             websocketOnMessage(event) {
                 this.websocketCount += 1;
                 let info = JSON.parse(event.data);
-                console.log(info.messageType, ">>>>>>>>>>>>>>")
-                switch (info.messageType.toString) {
+                switch (info.messageType) {
                     case "heartcheck":
                         MySocket.websocketState = true;
-                        console.log(MySocket.websocketState,"???????2??????")
                         break;
                     case "topic":
                         this.loading = true;
                         this.$nextTick(() => {
                             this.showTipsJoinRoom &&
-                            this.setMessageDataList({ messageType: "info", messageContent: info.data.toString() });
+                            this.setMessageDataList({ messageType: "info", messageContent: info.data.data });
                         })
                         break;
                     case "error":

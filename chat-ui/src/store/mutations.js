@@ -43,12 +43,10 @@ export default {
 	 * @param {*} messageInfo [] || {} 数组表示第一次获取了历史信息或者上拉加载更多 {} 表示一条新消息， 直接存入即可
 	 */
 	setMessageDataList(state, messageInfo) {
-		console.log(messageInfo,">>>>>>>>>>>")
 		const isArray = Array.isArray(messageInfo);
 		let result = [];
 		isArray && (result = [...messageInfo, ...state.messageList]);
 		!isArray && (result = [...state.messageList, ...[messageInfo]]);
-		console.log(result,">>>>>>>>>>>")
 		state.messageList = state.showAllTips ? result : result.filter(t => t.messageType !== 'info');
 	},
 
