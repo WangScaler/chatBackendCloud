@@ -2,6 +2,7 @@ package com.wangscaler.chatredis.listener;
 
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.wangscaler.chatcore.util.SpringContextUtils;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,14 @@ public class RedisReceiver {
      *
      * @param params
      */
-    public void onMessage(HashMap<String,Object> params) {
+    public void onMessage(HashMap<String, Object> params) {
         Object handlerName = params.get("handlerName");
-        RedisListener messageListener = SpringContextUtils.getHandler(handlerName.toString(), RedisListener.class);
+        RedisListener messageListener = null;
+        try {
+            messageListener = SpringUtil.getBean(handlerName.toString(), RedisListener.class);
+        } catch (Exception e) {
+            return;
+        }
         if (ObjectUtil.isNotEmpty(messageListener)) {
             messageListener.onMessage(params);
         }

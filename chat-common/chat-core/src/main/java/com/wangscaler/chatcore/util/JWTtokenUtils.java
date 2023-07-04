@@ -54,13 +54,16 @@ public class JWTtokenUtils {
      * @return 数据声明
      */
     public static Claims parseToken(String token) {
+        if (token.startsWith(TokenConstants.PREFIX)) {
+            token = replaceTokenPrefix(token);
+        }
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
+
     /**
      * 从request获取token
      */
-    public static String getToken(HttpServletRequest request)
-    {
+    public static String getToken(HttpServletRequest request) {
         // 从header获取token标识
         String token = request.getHeader(TokenConstants.AUTHENTICATION);
         return replaceTokenPrefix(token);
@@ -69,24 +72,23 @@ public class JWTtokenUtils {
     /**
      * 裁剪token前缀
      */
-    public static String replaceTokenPrefix(String token)
-    {
+    public static String replaceTokenPrefix(String token) {
         // 如果前端设置了令牌前缀，则裁剪掉前缀
-        if (StringUtils.isNotEmpty(token) && token.startsWith(TokenConstants.PREFIX))
-        {
+        if (StringUtils.isNotEmpty(token) && token.startsWith(TokenConstants.PREFIX)) {
             token = token.replaceFirst(TokenConstants.PREFIX, "");
         }
         return token;
     }
+
     /**
      * 获取用户ID
      *
      * @param claims
      * @return 用户ID
      */
-    public static String getUserId(Claims claims)
-    {
+    public static String getUserId(Claims claims) {
         return String.valueOf(claims.get(SecurityConstants.DETAILS_USER_ID));
     }
+
 
 }

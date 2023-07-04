@@ -5,6 +5,7 @@ import com.wangscaler.chatredis.listener.RedisListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 
 /**
@@ -12,12 +13,10 @@ import java.util.HashMap;
  *
  */
 @Slf4j
-@Component
+@Component("socketHandler")
 public class SocketHandler implements RedisListener {
-
     @Autowired
     private WebSocket webSocket;
-
     @Override
     public void onMessage(HashMap<String, Object> map) {
         //TODO 安全校验
@@ -27,9 +26,9 @@ public class SocketHandler implements RedisListener {
             String userId = String.valueOf(map.get("userId"));
             Object message =  map.get("message");
             if (ObjectUtil.isNotEmpty(userId)) {
-                webSocket.sendOneMessage(userId, message);
+                webSocket.pushMessage(userId, message);
             } else {
-                webSocket.sendAllMessage(message);
+                webSocket.pushMessage(message);
             }
         }catch (Exception e){
             e.printStackTrace();

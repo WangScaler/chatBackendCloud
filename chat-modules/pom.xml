@@ -12,6 +12,7 @@
     <modules>
         <module>chat-user</module>
         <module>chat-room</module>
+        <module>chat-websocket</module>
     </modules>
     <artifactId>chat-modules</artifactId>
     <packaging>pom</packaging>

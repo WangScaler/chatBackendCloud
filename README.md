@@ -25,12 +25,12 @@ com.wangscaler
 │       └── chat-swagger    // 接口文档
 |       └── chat-datasource // 数据源
 |       └── chat-seata      // 分布式事务
-|       └── chat-websoket   // websocket[9201]
 ├── chat-modules            // 业务模块
 │       └── chat-user       // 用户模块 [9201]
 │       └── chat-room       // 房间模块 [9301]
 |       └── chat-message    // 消息模块 [9401]
 |       └── chat-music      // 音乐模块 [9501]
+|       └── chat-websoket   // websocket[9601]
 ├──pom.xml                  // 公共依赖
 ~~~
 
@@ -52,7 +52,7 @@ sentinel降级熔断的配置信息拉取自nacos
 
 ## WebSocket
 
-挂载在用户模块上,所以通过用户模块的端口进行连接
+独立成单个模块
 
 ## 构建步骤
 

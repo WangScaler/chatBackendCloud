@@ -1,5 +1,6 @@
 package com.wangscaler.chatredis.config;
 
+import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatredis.listener.RedisReceiver;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -35,7 +36,6 @@ public class RedisConfig extends CachingConfigurerSupport
     {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(lettuceConnectionFactory);
-
         FastJson2JsonRedisSerializer serializer = new FastJson2JsonRedisSerializer(Object.class);
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
@@ -59,7 +59,7 @@ public class RedisConfig extends CachingConfigurerSupport
     public RedisMessageListenerContainer redisContainer(RedisConnectionFactory redisConnectionFactory, RedisReceiver redisReceiver, MessageListenerAdapter commonListenerAdapter) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory);
-        container.addMessageListener(commonListenerAdapter, new ChannelTopic("redis_topic"));
+        container.addMessageListener(commonListenerAdapter, new ChannelTopic(RedisConstants.REDIS_WEBSOCKET));
         return container;
     }
 
@@ -67,7 +67,7 @@ public class RedisConfig extends CachingConfigurerSupport
     @Bean
     MessageListenerAdapter commonListenerAdapter(RedisReceiver redisReceiver) {
         MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisReceiver, "onMessage");
-        messageListenerAdapter.setSerializer(new StringRedisSerializer());
+        messageListenerAdapter.setSerializer(new FastJson2JsonRedisSerializer(Object.class));
         return messageListenerAdapter;
     }
 }

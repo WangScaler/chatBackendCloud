@@ -146,8 +146,6 @@
         <module>chat-openfeign</module>
         <module>chat-modules</module>
         <module>chat-gateway</module>
-        <module>chat-common/chat-redis</module>
-        <module>chat-common/chat-websocket</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>

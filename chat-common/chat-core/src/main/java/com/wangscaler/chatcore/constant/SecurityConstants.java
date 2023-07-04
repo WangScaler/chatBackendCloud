@@ -9,30 +9,30 @@ public class SecurityConstants {
     /**
      * 用户ID字段
      */
-    public static final String DETAILS_USER_ID = "user_id";
+    public static final String DETAILS_USER_ID = "userId";
 
     /**
      * 用户名字段
      */
-    public static final String DETAILS_USERNAME = "user_ame";
+    public static final String DETAILS_USERNAME = "userName";
 
     /**
      * 角色
      */
-    public static final String USER_ROLE = "user_role";
+    public static final String USER_ROLE = "userRole";
     /**
      * 用户昵称
      */
-    public static final String USER_NICK= "user_nick";
+    public static final String USER_NICK= "userNick";
     /**
      * 邮箱
      */
-    public static final String USER_EMAIL = "user_email";
+    public static final String USER_EMAIL = "userEmail";
 
     /**
      * token过期时间key
      */
-    public static final String EXPIRETIME_KEY = "expire_time";
+    public static final String EXPIRETIME_KEY = "expireTime";
 
     /**
      * token过期时间
@@ -57,12 +57,12 @@ public class SecurityConstants {
     /**
      * 用户标识
      */
-    public static final String USER_KEY = "user_key";
+    public static final String USER_KEY = "userKey";
 
     /**
      * 登录用户
      */
-    public static final String LOGIN_USER = "login_user";
+    public static final String LOGIN_USER = "loginUser";
 
 
 }

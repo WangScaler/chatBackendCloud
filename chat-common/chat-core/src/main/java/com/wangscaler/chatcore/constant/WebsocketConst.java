@@ -2,14 +2,19 @@ package com.wangscaler.chatcore.constant;
 
 /**
  * @Description: Websocket常量类
+ * {
+ *     messageType: 消息类型
+ *     messageData: 消息数据
+ *     msgId: 消息id
+ *     userId: 发送者
+ * }
  */
 public class WebsocketConst {
 
-
     /**
-     * 消息json key:cmd
+     * 消息类型json key:type
      */
-    public static final String MSG_CMD = "cmd";
+    public static final String MSG_TYPE = "messageType";
 
     /**
      * 消息json key:msgId
@@ -17,7 +22,7 @@ public class WebsocketConst {
     public static final String MSG_ID = "msgId";
 
     /**
-     * 消息json key:msgData
+     * 消息内容json key:msgData
      */
     public static final String MSG_DATA = "data";
 
@@ -40,5 +45,15 @@ public class WebsocketConst {
      * 消息类型 topic 系统通知
      */
     public static final String NOTICE_TOPIC = "topic";
+
+    /**
+     * 系统用户json value:userId
+     */
+    public static final String SYSTEM_USER = "system";
+
+    /**
+     * 消息类型json data:key:type
+     */
+    public static final String MSG_TIP = "messageTip";
 
 }
