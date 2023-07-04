@@ -2,41 +2,41 @@
 	<div class="persion">
 		<div class="header">
 			<el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-				<img :src="form.room_logo" class="avatar" />
+				<img :src="form.roomLogo" class="avatar" />
 			</el-upload>
 		</div>
 		<span class="uuid">专属房间ID: {{ uuid }}</span>
 		<div class="form">
 			<el-form ref="userForm" :model="form" label-position="right" label-width="80px" size="mini" :rules="rules">
-				<el-form-item prop="room_name" label="房间名称">
-					<el-input v-model="form.room_name" clearable placeholder="输入您的房间名称" />
+				<el-form-item prop="roomName" label="房间名称">
+					<el-input v-model="form.roomName" clearable placeholder="输入您的房间名称" />
 				</el-form-item>
-				<el-form-item prop="room_need_password" label="房间权限">
-					<el-select v-model="form.room_need_password" placeholder="请选择您的房间权限" style="width: 100%">
+				<el-form-item prop="roomNeedPassword" label="房间权限">
+					<el-select v-model="form.roomNeedPassword" placeholder="请选择您的房间权限" style="width: 100%">
 						<el-option label="房间加密" :value="2"></el-option>
 						<el-option label="公开房间" :value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item prop="room_interval" label="点歌间隔">
-					<el-input v-model="form.room_interval" disabled clearable placeholder="输入您的房间名称" />
+				<el-form-item prop="roomInterval" label="点歌间隔">
+					<el-input v-model="form.roomInterval" disabled clearable placeholder="输入您的房间名称" />
 				</el-form-item>
-				<el-form-item prop="room_speak" label="发言权限">
-					<el-select v-model="form.room_speak" disabled placeholder="请选择您的发言权限" style="width: 100%">
+				<el-form-item prop="roomSpeak" label="发言权限">
+					<el-select v-model="form.roomSpeak" disabled placeholder="请选择您的发言权限" style="width: 100%">
 						<el-option label="允许所有人发言" :value="1"></el-option>
 						<el-option label="禁止所有人发言" :value="2"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item prop="room_choose" label="点歌权限">
-					<el-select v-model="form.room_choose" disabled placeholder="请选择您的点歌权限" style="width: 100%">
+				<el-form-item prop="roomChoose" label="点歌权限">
+					<el-select v-model="form.roomChoose" disabled placeholder="请选择您的点歌权限" style="width: 100%">
 						<el-option label="允许所有人点歌" :value="1"></el-option>
 						<el-option label="禁止所有人点歌" :value="2"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item prop="room_password" label="房间密码">
-					<el-input v-model="form.room_password" show-password clearable placeholder="如不更改，无需填写" />
+				<el-form-item prop="roomPassword" label="房间密码">
+					<el-input v-model="form.roomPassword" show-password clearable placeholder="如不更改，无需填写" />
 				</el-form-item>
-				<el-form-item prop="room_notice" label="房间公告">
-					<el-input v-model="form.room_notice" type="textarea" :rows="5" placeholder="请填写房间公告、以英文,换行" />
+				<el-form-item prop="roomNotice" label="房间公告">
+					<el-input v-model="form.roomNotice" type="textarea" :rows="5" placeholder="请填写房间公告、以英文,换行" />
 				</el-form-item>
 			</el-form>
 			<div class="btns">
@@ -57,37 +57,37 @@ export default {
   components: {},
   data() {
     return {
-      uploadUrl: config.file_upload_url,
+      uploadUrl: config.fileUploadUrl,
       imageUrl: "",
       uuid: "",
       form: {
-        room_id: null,
-        room_name: null,
-        room_notice: null,
-        room_need_password: null,
-        room_password: null,
-        room_logo: null,
-        room_speak: 1,
-        room_choose: 1,
-        room_interval: 8,
+      	roomId: null,
+        roomName: null,
+        roomNotice: null,
+        roomNeedPassword: null,
+        roomPassword: null,
+        roomLogo: null,
+        roomSpeak: 1,
+        roomChoose: 1,
+        roomInterval: 8,
       },
       rules: {
-        room_name: [
+        roomName: [
           { required: true, message: "请输入您房间名称", trigger: "blur" },
           { min: 1, max: 12, message: "长度在1到10个字符", trigger: "blur" },
         ],
-        room_notice: [
+        roomNotice: [
           { required: true, message: "请输入房间公告", trigger: "blur" },
           { max: 512, message: "最长为512字符", trigger: "blur" },
         ],
-        room_need_password: [
+        roomNeedPassword: [
           { required: true, message: "请设置房间权限", trigger: "change" },
         ],
       },
     };
   },
   computed: {
-    ...mapGetters(["mine_id", "room_info"]),
+    ...mapGetters(["mineId", "roomInfo"]),
   },
   created() {
     this.initRoomInfo();
@@ -96,7 +96,7 @@ export default {
     ...mapActions(["getRoomInfo"]),
     handleAvatarSuccess(res) {
       if (!res.data[0].url) return this.$message.error("上传头像失败");
-      this.form.room_logo = res.data[0].url;
+      this.form.roomLogo = res.data[0].url;
     },
     beforeAvatarUpload(file) {
       const isLt1M = file.size / 1024 / 1024 < 1;
@@ -107,17 +107,17 @@ export default {
     },
 
     initRoomInfo() {
-      if (!this.room_info) return;
-      const { room_name, room_notice, room_need_password, room_logo, room_id } =
-        this.room_info;
+      if (!this.roomInfo) return;
+      const { roomName, roomNotice, roomNeedPassword, roomLogo, roomId } =
+        this.roomInfo;
       Object.assign(this.form, {
-        room_name,
-        room_notice,
-        room_need_password,
-        room_logo,
-        room_id,
+        roomName,
+        roomNotice,
+        roomNeedPassword,
+        roomLogo,
+        roomId,
       });
-      this.uuid = room_id.toString().padStart(3, 0);
+      this.uuid = roomId.toString().padStart(3, 0);
     },
 
     updateUser() {
@@ -129,22 +129,22 @@ export default {
         await this.getRoomInfo();
         /* 数据格式同步于服务端connectSuccess */
         const {
-          room_name,
-          room_notice,
-          room_need_password,
-          room_id,
-          room_bg_img,
-          room_logo,
+          roomName,
+          roomNotice,
+          roomNeedPassword,
+          roomId,
+          roomBgImg,
+          roomLogo,
         } = this.form;
-        /* 这个页面只能房主操作，所以这里的room_user_id就是自己 */
+        /* 这个页面只能房主操作，所以这里的roomUserId就是自己 */
         const newRoomInfo = {
-          room_name,
-          room_notice,
-          room_need_password,
-          room_bg_img,
-          room_logo,
-          room_id,
-          room_user_id: this.mine_id,
+          roomName,
+          roomNotice,
+          roomNeedPassword,
+          roomBgImg,
+          roomLogo,
+          roomId,
+          roomUserId: this.mineId,
         };
         /* 通知服务端聊天室需要更新房间的信息 */
         this.$socket.client.connected &&
@@ -154,26 +154,26 @@ export default {
 
     /* 移除房间背景 */
     async removeRoomBgImg() {
-      await updateRoomInfo({ room_bg_img: "", room_id: this.form.room_id });
+      await updateRoomInfo({ roomBgImg: "", roomId: this.form.roomId });
       this.$message.success("已移除掉您的房间背景！");
       /* 修改完重新查一次保证本地数据是最新的 */
       await this.getRoomInfo();
       const {
-        room_name,
-        room_notice,
-        room_need_password,
-        room_id,
-        room_bg_img,
-        room_logo,
+        roomName,
+        roomNotice,
+        roomNeedPassword,
+        roomId,
+        roomBgImg,
+        roomLogo,
       } = this.form;
       const newRoomInfo = {
-        room_name,
-        room_notice,
-        room_need_password,
-        room_bg_img,
-        room_logo,
-        room_id,
-        room_user_id: this.mine_id,
+        roomName,
+        roomNotice,
+        roomNeedPassword,
+        roomBgImg,
+        roomLogo,
+        roomId,
+        roomUserId: this.mineId,
       };
       /* 通知服务端聊天室需要更新房间的信息 */
       this.$socket.client.connected &&

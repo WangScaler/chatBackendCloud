@@ -8,8 +8,8 @@ export default {
 	async getUserInfo({ commit }) {
 		return new Promise(resolve => {
 			getInfo().then(res => {
-				const { user_info } = res.data;
-				commit('setUserInfo', user_info);
+				const { userInfo } = res.data;
+				commit('setUserInfo', userInfo);
 				resolve(true);
 			});
 		});
@@ -18,7 +18,7 @@ export default {
 	/* 获取当前房间信息 */
 	async getRoomInfo({ commit, state }) {
 		return new Promise(resolve => {
-			queryRoomInfo({ room_id: state.room_id }).then(res => {
+			queryRoomInfo({ roomId: state.roomId }).then(res => {
 				commit('setRoomInfo', res.data);
 				resolve(true);
 			});

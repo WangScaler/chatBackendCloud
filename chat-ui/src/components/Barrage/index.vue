@@ -1,13 +1,13 @@
 <template>
 	<div class="barrage">
-		========{{ showBarrageImg }}
+		{{ showBarrageImg }}
 		<Barrage :data="data" style="height: 400px" :barrage-style="barrageStyle" show-area="top" touch-pause :defer="1" :track-height="50" :speed="20">
 			<template #default="data">
-				<div v-if="data.message_type === 'text'" :class="[{mine: data.user_id === mine_id}, 'barrage-wapper']">
-					<img v-if="data?.user_info?.user_avatar && showBarrageAvatar" :src="data.user_info.user_avatar" class="barrage-avatar" alt="" />
-					<span v-html="replaceEmotionText(data.message_content)"></span>
+				<div v-if="data.messageType === 'text'" :class="[{mine: data.userId === mineId}, 'barrage-wapper']">
+					<img v-if="data?.userInfo?.userAvatar && showBarrageAvatar" :src="data.userInfo.userAvatar" class="barrage-avatar" alt="" />
+					<span v-html="replaceEmotionText(data.messageContent)"></span>
 				</div>
-				<img v-if="data.message_type === 'png' && showBarrageImg" class="barrage-img" :src="data.message_content.url" />
+				<img v-if="data.messageType === 'png' && showBarrageImg" class="barrage-img" :src="data.messageContent.url" />
 			</template>
 		</Barrage>
 	</div>
@@ -37,7 +37,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["mine_id", "room_id"]),
+        ...mapGetters(["mineId", "roomId"]),
         ...mapState(['showHistoryBarrageInfo','showBarrageImg','showBarrageAvatar']),
         barrageStyle(){
             return {
@@ -70,7 +70,7 @@ export default {
         async queryMsg(){
             if(!this.loopBarrage) return
             const res = await history({
-                room_id: this.room_id,
+                roomId: this.roomId,
                 ...this.params,
             })
             this.data = res.data

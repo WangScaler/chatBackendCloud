@@ -3,11 +3,11 @@
 		<div class="header-left flex_start">
 			<div class="header-left-id">
 				<span class="visible-xl visible-lg">ID:</span>
-				{{ (room_info && room_info.room_id) || 888 }}
+				{{ (roomInfo && roomInfo.roomId) || 888 }}
 			</div>
 			<div class="header-left-name">
 				<span class="visible-xl visible-lg">{{
-          (room_info && room_info.room_name) || "小九的聊天室"
+          (roomInfo && roomInfo.roomName) || "小九的聊天室"
 				}}</span>
 			</div>
 			<div class="header-left-share flex_center" :data-clipboard-text="copyText" @click="share">
@@ -24,7 +24,7 @@
 				<span class="visible-xl visible-lg">开源地址</span>
 			</div>
 			<div
-				v-if="Number(mine_room_id) === Number(room_id)"
+				v-if="Number(mineRoomInfo) === Number(roomId)"
 				:class="[
           'header-right-item',
           'flex_center',
@@ -113,21 +113,21 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "mine_room_id",
+      "mineRoomInfo",
       "onLineRoomNum",
       "onLineUserNum",
-      "room_id",
-      "room_info",
-      "user_info",
+      "roomId",
+      "roomInfo",
+      "userInfo",
     ]),
     btnText() {
-      return !this.mine_room_id ? "创建房间" : "我的房间";
+      return !this.mineRoomInfo ? "创建房间" : "我的房间";
     },
     copyText() {
       return "分享内容";
     },
     isMineRoom() {
-      return Number(this.room_id) === Number(this.mine_room_id);
+      return Number(this.roomId) === Number(this.mineRoomInfo);
     },
   },
   methods: {
@@ -158,10 +158,10 @@ export default {
     },
     createOrJoinRoom() {
       if (!this.$socket.client.connected) return this.setSignInPopup(true);
-      if (!this.mine_room_id) return (this.createRoomVisible = true);
-      if (Number(this.mine_room_id) === Number(this.room_id))
+      if (!this.mineRoomInfo) return (this.createRoomVisible = true);
+      if (Number(this.mineRoomInfo) === Number(this.roomId))
         return this.$message.warning("当前已经在这个房间里了");
-      this.setRoomId(this.mine_room_id);
+      this.setRoomId(this.mineRoomInfo);
       this.closeBox();
     },
     handlerCreateSuccess() {

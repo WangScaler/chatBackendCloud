@@ -5,7 +5,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './assets/css/index.less';
-import './socket-io/index.js';
 import './utils/vue.prototype';
 import './icons/index';
 import './permission';

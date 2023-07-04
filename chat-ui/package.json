@@ -35,12 +35,10 @@
     "less-loader": "^5.0.0",
     "nprogress": "^0.2.0",
     "prettier": "^2.2.1",
-    "socket.io-client": "^4.3.2",
     "style-resources-loader": "^1.5.0",
     "svg-sprite-loader": "^6.0.11",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-custom-barrage": "^0.0.6",
-    "vue-socket.io-extended": "^4.2.0",
     "vue-template-compiler": "^2.6.11",
     "xml-loader": "^1.2.1"
   }

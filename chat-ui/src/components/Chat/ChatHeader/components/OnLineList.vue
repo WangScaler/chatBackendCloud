@@ -1,22 +1,22 @@
 <template>
 	<div class="online">
-		<div v-for="(item, index) in on_line_user_list" :key="index" :class="['online-item', { current: mine(item.id) }]">
-			<img class="online-item-avatar" :src="item && item.user_avatar" />
+		<div v-for="(item, index) in onLineUserList" :key="index" :class="['online-item', { current: mine(item.id) }]">
+			<img class="online-item-avatar" :src="item && item.userAvatar" />
 			<div class="online-item-info">
 				<div class="online-item-info-name">
-					<span>{{ item.user_nick }}</span>
+					<span>{{ item.userNick }}</span>
 					<span
-						v-if="item.id === room_admin_id || item.user_role === 'admin'"
+						v-if="item.id === roomAdminId || item.userRole === 'admin'"
 						class="role"
 						:style="{
-              backgroundColor: roleBgColor(item.user_role === 'admin' ? 2 : 1),
+              backgroundColor: roleBgColor(item.userRole === 'admin' ? 2 : 1),
             }"
 					>
-						{{ item.user_role === "admin" ? "超级管理员" : "房主" }}
+						{{ item.userRole === "admin" ? "超级管理员" : "房主" }}
 					</span>
 				</div>
 				<div class="online-item-info-desc s-1-line">
-					{{ item.user_sign }}
+					{{ item.userSign }}
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "OnLineInfo",
   computed: {
-    ...mapGetters(["room_admin_id", "on_line_user_list", "mine_id"]),
+    ...mapGetters(["roomAdminId", "onLineUserList", "mineId"]),
     roleBgColor() {
       return (type) => {
         const map = { 1: "#701ec9", 2: "#000" };
@@ -37,7 +37,7 @@ export default {
       };
     },
     mine() {
-      return (id) => this.mine_id === id;
+      return (id) => this.mineId === id;
     },
   },
 };

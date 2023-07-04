@@ -2,39 +2,39 @@
 	<div id="box" class="message-box">
 		<div v-for="(item, index) in messageList" :key="index" :ref="`message__${item.id || -1}`" :class="['message-box-item', messageClass(item)]">
 			<!-- text  'notice', 'info' 类型分别代表公告和中间的提示消息不在此处显示-->
-			<span v-if="!tipsMessageType.includes(item.message_type)" class="message-box-item-info">
+			<span v-if="!tipsMessageType.includes(item.messageType)" class="message-box-item-info">
 				<el-dropdown trigger="click" placement="bottom" size="mini" @command="handlerMessageCommand($event, item)">
 					<div class="info-box">
 						<span :class="['name']">
-							{{ item.user_info && item.user_info.user_nick }}
+							{{ item.userInfo && item.userInfo.userNick }}
 						</span>
 
 						<!-- 文字消息 -->
 						<span
 							v-if="
-                item.message_type === 'text' && !isUrl(item.message_content)
+                item.messageType === 'text' && !isUrl(item.messageContent)
               "
 							:class="['message', textClass(item)]"
-							v-html="replaceEmotionText(item.message_content)"
+							v-html="replaceEmotionText(item.messageContent)"
 						></span>
 						<!-- 链接地址 -->
-						<a v-if="item.message_type === 'text' && isUrl(item.message_content)" :href="item.message_content" target="_blank" :class="['message', 'msg-url']" @click.stop>
+						<a v-if="item.messageType === 'text' && isUrl(item.messageContent)" :href="item.messageContent" target="_blank" :class="['message', 'msg-url']" @click.stop>
 							<icon name="chat-panel-link" scale="1.8" />
-							{{ item.message_content }}
+							{{ item.messageContent }}
 						</a>
 						<!-- 图片消息 -->
-						<span v-if="imgMessageType.includes(item.message_type)" :class="['msg-img', { 'msg-emo': item.message_type === 'emo' }]">
-							<img :ref="`img__${item.id}`" :src="item.message_content.url" @click="previewImg(item)" />
+						<span v-if="imgMessageType.includes(item.messageType)" :class="['msg-img', { 'msg-emo': item.messageType === 'emo' }]">
+							<img :ref="`img__${item.id}`" :src="item.messageContent.url" @click="previewImg(item)" />
 						</span>
 						<!-- 非图片的类型的其他信息 不包含公告提示和文字图片等所有类型 -->
-						<span v-if="otherFileType(item.message_type)" class="msg-other">
+						<span v-if="otherFileType(item.messageType)" class="msg-other">
 							<div class="msg-other-panel">
 								<div class="file-info">
 									<span class="file-info-name">{{
-                    item.message_content.name
+                    item.messageContent.name
 									}}</span>
 									<span class="file-info-size">{{
-                    item.message_content.size
+                    item.messageContent.size
 									}}</span>
 								</div>
 								<icon class="file-icon" name="chat-frame-unknow-file" scale="4" />
@@ -49,31 +49,31 @@
               ]"
 							@click.stop="handlerJumpMessage(item.quote_info.quote_message_id)"
 						>
-							<span v-if="item.quote_info.quote_message_status === 1" style="margin: 5px">{{ item.quote_info.quote_user_nick }}:</span>
+							<span v-if="item.quote_info.quote_message_status === 1" style="margin: 5px">{{ item.quote_info.quote_userNick }}:</span>
 							<!-- 引用消息已被撤回 -->
 							<span v-if="item.quote_info.quote_message_status === -1"> 引用消息已被撤回</span>
 							<!-- 文字消息引用 -->
 							<span
 								v-if="
-                  item.quote_info.quote_message_type === 'text' &&
+                  item.quote_info.quote_messageType === 'text' &&
                   item.quote_info.quote_message_status === 1
                 "
 							>
-								{{ item.quote_info.quote_message_content }}</span
+								{{ item.quote_info.quote_messageContent }}</span
 							>
 							<!-- 图片消息引用 包含表情包 -->
 							<img
 								v-if="
-                  imgMessageType.includes(item.quote_info.quote_message_type) &&
+                  imgMessageType.includes(item.quote_info.quote_messageType) &&
                   item.quote_info.quote_message_status === 1
                 "
-								:src="item.quote_info.quote_message_content.url"
+								:src="item.quote_info.quote_messageContent.url"
 								class="message-img"
 							/>
 							<!-- 特殊格式文件引用 -->
 							<span
 								v-if="
-                  otherFileType(item.quote_info.quote_message_type) &&
+                  otherFileType(item.quote_info.quote_messageType) &&
                   item.quote_info.quote_message_status === 1
                 "
 								class="msg-other quote-msg-other"
@@ -81,10 +81,10 @@
 								<div class="msg-other-panel">
 									<div class="file-info">
 										<span class="file-info-name">{{
-                      item.quote_info.quote_message_content.name
+                      item.quote_info.quote_messageContent.name
 										}}</span>
 										<span class="file-info-size">{{
-                      item.quote_info.quote_message_content.size
+                      item.quote_info.quote_messageContent.size
 										}}</span>
 									</div>
 									<icon class="file-icon" name="chat-frame-unknow-file" scale="4" />
@@ -98,37 +98,37 @@
 					<span>
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item icon="el-icon-chat-line-square" command="1">引用消息</el-dropdown-item>
-							<el-dropdown-item v-if="item.user_info.id === mine_id" icon="el-icon-delete" command="2">撤回消息</el-dropdown-item>
+							<el-dropdown-item v-if="item.userInfo.id === mineId" icon="el-icon-delete" command="2">撤回消息</el-dropdown-item>
 							<el-dropdown-item
 								v-if="
-                  imgMessageType.includes(item.message_type) &&
-                  item.message_type !== 'emo'
+                  imgMessageType.includes(item.messageType) &&
+                  item.messageType !== 'emo'
                 "
 								icon="el-icon-search"
 								command="3"
 								>预览大图</el-dropdown-item
 							>
-							<el-dropdown-item v-if="otherFileType(item.message_type)" icon="el-icon-download" command="4">下载文件</el-dropdown-item>
+							<el-dropdown-item v-if="otherFileType(item.messageType)" icon="el-icon-download" command="4">下载文件</el-dropdown-item>
 						</el-dropdown-menu>
 					</span>
 				</el-dropdown>
 
-				<!-- 用户可能删除账户的情况就没有item.user_info了 -->
-				<img v-if="item.user_info" class="avatar" :src="item.user_info.user_avatar" />
-				<img v-if="!item.user_info" class="avatar" :src="errAvatar" />
+				<!-- 用户可能删除账户的情况就没有item.userInfo了 -->
+				<img v-if="item.userInfo" class="avatar" :src="item.userInfo.userAvatar" />
+				<img v-if="!item.userInfo" class="avatar" :src="errAvatar" />
 			</span>
 
 			<!-- info -->
-			<span v-if="item.message_type === 'info'" class="msg">
-				{{ item.message_content }}
+			<span v-if="item.messageType === 'info'" class="msg">
+				{{ item.messageContent }}
 			</span>
 
 			<!-- notice -->
-			<span v-if="item.message_type === 'notice'" class="notice-box">
+			<span v-if="item.messageType === 'notice'" class="notice-box">
 				<div class="notice-box-header">
 					<span class="title">房间公告</span>
 				</div>
-				<div v-for="(t, i) in item.message_content" :key="i">{{ t }}</div>
+				<div v-for="(t, i) in item.messageContent" :key="i">{{ t }}</div>
 			</span>
 		</div>
 
@@ -161,24 +161,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(["messageList", "un_read_msg_num"]),
-    ...mapGetters(["mine_id", "room_admin_id"]),
+    ...mapState(["messageList", "unReadMsgNum"]),
+    ...mapGetters(["mineId", "roomAdminId"]),
     messageClass() {
       return (item) => {
-        const { user_id, message_type } = item;
-        if (!["info", "notice"].includes(message_type)) {
-          return user_id === this.mine_id ? "mine" : "other";
+        const { userId, messageType } = item;
+        if (!["info", "notice"].includes(messageType)) {
+          return userId === this.mineId ? "mine" : "other";
         }
-        return message_type;
+        return messageType;
       };
     },
 
     textClass() {
       return (item) => {
-        if (!item.user_info) return;
-        const { user_role, id } = item.user_info;
-        if (user_role === "admin") return "admin-text";
-        if (this.room_admin_id === id) return "homeowner";
+        if (!item.userInfo) return;
+        const { userRole, id } = item.userInfo;
+        if (userRole === "admin") return "admin-text";
+        if (this.roomAdminId === id) return "homeowner";
       };
     },
 
@@ -223,7 +223,7 @@ export default {
       /* 不在可是区域并且增加了一条消息 提示未读消息+1 */
       !this.isVisible &&
         isOneMsg &&
-        this.setUnReadMsgNum(this.un_read_msg_num + 1);
+        this.setUnReadMsgNum(this.unReadMsgNum + 1);
     },
 
     stopLoadmore(n) {
@@ -286,7 +286,7 @@ export default {
       if (Number(val) === 2)
         return this.$socket.client.emit("recallMessage", {
           id: message.id,
-          user_nick: message.user_info.user_nick,
+          userNick: message.userInfo.userNick,
         });
       if (Number(val) === 3) return this.handlerPreBigImg(message);
       if (Number(val) === 4) return this.handlerDownLiad(message);
@@ -304,7 +304,7 @@ export default {
     handlerPreBigImg(message) {
       const { width, height } = this.$refs[`img__${message.id}`][0];
       this.setPreImg({
-        url: message.message_content.url,
+        url: message.messageContent.url,
         width: width * 2,
         height: height * 2,
       });
@@ -312,7 +312,7 @@ export default {
 
     /* 下载 */
     handlerDownLiad(message) {
-      const { url } = message.message_content;
+      const { url } = message.messageContent;
       const link = document.createElement("a"); // 自己创建的a标签
       link.href = url;
       document.body.appendChild(link);

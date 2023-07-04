@@ -1,11 +1,11 @@
 <template>
 	<div class="queue">
-		<div v-if="!music_queue_list.length" class="empty">
+		<div v-if="!musicQueueList.length" class="empty">
 			<icon name="choose-music-empty" scale="16" class="m_b30" />
 			<span class="tips">一首都没有、还不快来点</span>
 		</div>
 		<div v-else class="queue-content">
-			<div v-for="(item, index) in music_queue_list" :key="index" class="music">
+			<div v-for="(item, index) in musicQueueList" :key="index" class="music">
 				<img :src="item.music_cover" alt="item.music_name" class="music-pic" />
 				<div class="music-info">
 					<div class="music-info-name">{{ item.music_name }}</div>
@@ -23,7 +23,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["music_queue_list"]),
+    ...mapState(["musicQueueList"]),
   },
   watch: {},
   created() {},

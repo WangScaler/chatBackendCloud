@@ -24,11 +24,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["current_music_time", "music_lrc"]),
+    ...mapState(["currentMusicTime", "musicLrc"]),
     lrc() {
-      if (!this.music_lrc) return;
-      const res = this.music_lrc.filter(
-        (t) => t.time < this.current_music_time
+      if (!this.musicLrc) return;
+      const res = this.musicLrc.filter(
+        (t) => t.time < this.currentMusicTime
       );
       return res.length && res[res.length - 1].lineLyric;
     },

@@ -19,27 +19,27 @@
 		</div>
 		<div v-if="quoteMessage" class="quote" @click="focusInput">
 			<span class="quote-panel">
-				<span> {{ quoteMessage.user_info.user_nick }}: </span>
+				<span> {{ quoteMessage.userInfo.userNick }}: </span>
 				<!-- 引用文字类型 -->
-				<span v-if="quoteMessage.message_type === 'text'">
-					{{ quoteMessage.message_content }}
+				<span v-if="quoteMessage.messageType === 'text'">
+					{{ quoteMessage.messageContent }}
 				</span>
 				<!-- 引用图片类消息 -->
-				<img v-if="allowImgExt.includes(quoteMessage.message_type)" class="message-img" :src="quoteMessage.message_content.url" />
+				<img v-if="allowImgExt.includes(quoteMessage.messageType)" class="message-img" :src="quoteMessage.messageContent.url" />
 				<!-- 引用非图片类型文件 -->
 				<div
 					v-if="
-            !allowImgExt.includes(quoteMessage.message_type) &&
-            quoteMessage.message_type !== 'text'
+            !allowImgExt.includes(quoteMessage.messageType) &&
+            quoteMessage.messageType !== 'text'
           "
 					class="other-file-panel"
 				>
 					<div class="file-info">
 						<span class="file-info-name">{{
-              quoteMessage.message_content.name
+              quoteMessage.messageContent.name
 						}}</span>
 						<span class="file-info-size">{{
-              quoteMessage.message_content.size
+              quoteMessage.messageContent.size
 						}}</span>
 					</div>
 					<icon class="file-icon" name="chat-frame-unknow-file" scale="4" />
@@ -56,7 +56,7 @@ import axios from "axios";
 import ChatToolbar from "@/components/Chat/ChatToolbar";
 import config from '@/config/index.js'
 
-const {file_upload_url} = config
+const {fileUploadUrl} = config
 export default {
   components: { ChatToolbar },
   data() {
@@ -87,8 +87,8 @@ export default {
         /* 如果只要文字消息，没有资源文件[图片|非图片]就直接发送一条文字消息即可 */
         if (this.message && !this.fileInfo) {
           const data = {
-            message_type: "text",
-            message_content: JSON.stringify(this.message),
+            messageType: "text",
+            messageContent: JSON.stringify(this.message),
           };
           this.quoteMessage && (data.quote_message = this.quoteMessage);
           this.$socket.client.emit("message", data);
@@ -101,15 +101,15 @@ export default {
           formData.append("file", file);
           const config = { headers: { "Content-Type": "multipart/form-data" } };
           const res = await axios.post(
-            file_upload_url,
+            fileUploadUrl,
             formData,
             config
           );
           /* 非文字型消息都按这个格式来序列化 */
           const content = { name, size, ext, url: res.data.data[0].url };
           const data = {
-            message_type: ext,
-            message_content: JSON.stringify(content),
+            messageType: ext,
+            messageContent: JSON.stringify(content),
           };
           this.quoteMessage && (data.quote_message = this.quoteMessage);
           this.$socket.client.emit("message", data);
@@ -123,20 +123,20 @@ export default {
           const config = { headers: { "Content-Type": "multipart/form-data" } };
           try {
             const res = await axios.post(
-              file_upload_url,
+              fileUploadUrl,
               formData,
               config
             );
             const fileContent = { name, size, ext, url: res.data.data[0].url };
             /* 先发图片消息 */
             this.$socket.client.emit("message", {
-              message_type: ext,
-              message_content: JSON.stringify(fileContent),
+              messageType: ext,
+              messageContent: JSON.stringify(fileContent),
             });
             /* 再发文字消息 如果有引用消息只给文字即可 */
             const data = {
-              message_type: "text",
-              message_content: JSON.stringify(this.message),
+              messageType: "text",
+              messageContent: JSON.stringify(this.message),
             };
             this.quoteMessage && (data.quote_message = this.quoteMessage);
             this.$socket.client.emit("message", data);

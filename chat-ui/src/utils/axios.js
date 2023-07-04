@@ -23,7 +23,12 @@ service.interceptors.response.use(
         if (![200, 201].includes(response.status)) {
             Message.error(res.msg||"error");
         }
-        return res;
+        else if(res.code===401){
+            Message.error(`身份信息校验失败、请重新登录`);
+            store.dispatch('logout');
+            return;
+        }
+        return res
     },
     error => {
         console.log('error: ', {error});

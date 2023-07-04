@@ -3,33 +3,33 @@
 		<div v-if="!createRoomVisible">
 			<!-- 房间列表 -->
 			<div
-				v-for="(item, index) in room_list"
+				v-for="(item, index) in roomList"
 				:key="index"
 				:class="[
           'online-item',
-          { official: item.room_id == 888 },
+          { official: item.roomId == 888 },
           ,
-          { current: item.room_id == room_id },
+          { current: item.roomId == roomId },
         ]"
 				@click="handlerJoinRoom(item)"
 			>
-				<img class="online-item-avatar" :src="item.room_logo" />
-				<icon v-if="Number(item.room_id) === room_id" name="chat-room-info-select" scale="2.6" class="mine-room" />
+				<img class="online-item-avatar" :src="item.roomLogo" />
+				<icon v-if="Number(item.roomId) === roomId" name="chat-room-info-select" scale="2.6" class="mine-room" />
 				<div class="online-item-info">
 					<div class="online-item-info-name">
 						<span>
 							<span class="room-num">({{ item.on_line_nums }})</span>
-							{{ item.room_name }}
+							{{ item.roomName }}
 						</span>
 						<!-- 888官方房间 -->
-						<span v-if="item.room_id == 888" class="role hall">官方大厅</span>
+						<span v-if="item.roomId == 888" class="role hall">官方大厅</span>
 						<!-- 房间是否加密状态 -->
-						<span v-if="item.room_need_password === 2 && item.room_id != 888" class="lock">
+						<span v-if="item.roomNeedPassword === 2 && item.roomId != 888" class="lock">
 							<icon name="chat-room-info-lock" scale="1.8" />
 						</span>
 					</div>
 					<div class="online-item-info-desc s-1-line">
-						{{ item.room_notice }}
+						{{ item.roomNotice }}
 					</div>
 				</div>
 			</div>
@@ -59,25 +59,25 @@
 		<!-- 创建房间 -->
 		<div v-if="createRoomVisible" class="create">
 			<el-form ref="form" label-position="left" label-width="80px" :rules="rules" :model="ruleform" size="mini">
-				<el-form-item label="房间名称" prop="room_name">
-					<el-input v-model="ruleform.room_name" placeholder="请设置您的房间名称"></el-input>
+				<el-form-item label="房间名称" prop="roomName">
+					<el-input v-model="ruleform.roomName" placeholder="请设置您的房间名称"></el-input>
 				</el-form-item>
-				<el-form-item label="房间号码" prop="room_id">
-					<el-input v-model="ruleform.room_id" placeholder="请设置您的房间ID"></el-input>
+				<el-form-item label="房间号码" prop="roomId">
+					<el-input v-model="ruleform.roomId" placeholder="请设置您的房间ID"></el-input>
 				</el-form-item>
-				<el-form-item label="是否加密" prop="room_need_password">
-					<el-select v-model="ruleform.room_need_password" style="width: 100%" placeholder="请选择房间是否加密">
+				<el-form-item label="是否加密" prop="roomNeedPassword">
+					<el-select v-model="ruleform.roomNeedPassword" style="width: 100%" placeholder="请选择房间是否加密">
 						<el-option label="加密" :value="1"></el-option>
 						<el-option label="不加密" :value="0"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item v-if="Number(ruleform.room_need_password)" label="房间密码" prop="room_password">
-					<el-input v-model="ruleform.room_password" placeholder="请设置您的房间密码"></el-input>
+				<el-form-item v-if="Number(ruleform.roomNeedPassword)" label="房间密码" prop="roomPassword">
+					<el-input v-model="ruleform.roomPassword" placeholder="请设置您的房间密码"></el-input>
 				</el-form-item>
-				<el-form-item label="房间公告" prop="room_notice">
-					<el-input v-model="ruleform.room_notice" type="textarea" :rows="3" placeholder="请设置您的房间公告 英文,为换行"></el-input>
+				<el-form-item label="房间公告" prop="roomNotice">
+					<el-input v-model="ruleform.roomNotice" type="textarea" :rows="3" placeholder="请设置您的房间公告 英文,为换行"></el-input>
 				</el-form-item>
-				<el-form-item label="房间头像" porp="room_logo">
+				<el-form-item label="房间头像" porp="roomLogo">
 					<el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
 						<img v-if="preImage" :src="preImage" class="avatar" />
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -106,7 +106,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: config.file_upload_url,
+      uploadUrl: config.fileUploadUrl,
       showJoinModal: false,
       showPasswordModal: false,
       activeRoomId: null,
@@ -115,33 +115,33 @@ export default {
         password: null,
       },
       ruleform: {
-        room_id: null,
-        room_name: null,
-        room_notice: null,
-        room_need_password: null,
-        room_logo: null,
+        roomId: null,
+        roomName: null,
+        roomNotice: null,
+        roomNeedPassword: null,
+        roomLogo: null,
       },
       rules: {
-        room_id: [
+        roomId: [
           { required: true, message: "请设置您的房间ID", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
-        room_name: [
+        roomName: [
           { required: true, message: "请设置您的房间名称", trigger: "blur" },
           { min: 4, max: 8, message: "长度在 4 到 8 个字符", trigger: "blur" },
         ],
-        room_notice: [
+        roomNotice: [
           { required: true, message: "请设置您的房间公告", trigger: "blur" },
           { max: 520, message: "长度最长520字符", trigger: "blur" },
         ],
-        room_need_password: [
+        roomNeedPassword: [
           {
             required: true,
             message: "请设置房间是否需要密码",
             trigger: "change",
           },
         ],
-        room_password: [
+        roomPassword: [
           { required: true, message: "请设置房间密码", trigger: "change" },
           { min: 3, max: 9, message: "长度在 3 到 9 个字符", trigger: "blur" },
         ],
@@ -149,22 +149,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["room_list", "room_id", "mine_room_id"]),
+    ...mapGetters(["roomList", "roomId", "mineRoomInfo"]),
   },
   methods: {
     ...mapMutations(["setRoomId"]),
     handlerJoinRoom(room) {
-      const { room_id, room_need_password } = room;
-      if (Number(room_id) === Number(this.room_id)) {
+      const { roomId, roomNeedPassword } = room;
+      if (Number(roomId) === Number(this.roomId)) {
         return this.$message.warning("已经在当前房间了");
       }
-      if (room_need_password === 2) {
+      if (roomNeedPassword === 2) {
         return this.$message.warning("当前房间已加密，禁止加入房间！");
         // TODO 密码房间输入密码进入
         // this.showJoinModal = false
         // this.showPasswordModal = true
       }
-      this.activeRoomId = Number(room_id);
+      this.activeRoomId = Number(roomId);
       this.showJoinModal = true;
     },
 
@@ -187,7 +187,7 @@ export default {
     },
 
     handleAvatarSuccess(res, file) {
-      this.ruleform.room_logo = res.data[0].url;
+      this.ruleform.roomLogo = res.data[0].url;
       this.preImage = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {

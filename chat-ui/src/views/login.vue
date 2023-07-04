@@ -8,10 +8,10 @@
 
 			<div class="form">
 				<el-form ref="loginForm" :model="form" :rules="rules">
-					<el-form-item prop="user_name">
+					<el-form-item prop="userName">
 						<el-input v-model="form.userName" clearable placeholder="您的账户或邮箱" size="medium"></el-input>
 					</el-form-item>
-					<el-form-item prop="user_password">
+					<el-form-item prop="userPassword">
 						<el-input v-model="form.userPassword" clearable show-password placeholder="您的账户密码" size="medium" @keyup.native.enter="login"></el-input>
 					</el-form-item>
 				</el-form>

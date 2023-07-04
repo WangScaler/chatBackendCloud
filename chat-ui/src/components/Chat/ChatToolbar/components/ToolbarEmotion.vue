@@ -64,8 +64,8 @@ export default {
       const content = { name: "", size: "", ext, url };
       /* emo是我们自己规定的特殊类型 */
       const data = {
-        message_type: "emo",
-        message_content: JSON.stringify(content),
+        messageType: "emo",
+        messageContent: JSON.stringify(content),
       };
       this.$socket.client.emit("message", data);
     },

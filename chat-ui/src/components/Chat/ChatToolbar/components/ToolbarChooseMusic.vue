@@ -47,7 +47,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["room_admin_id"]),
+    ...mapGetters(["roomAdminId"]),
   },
   mounted() {
     this.focus();
@@ -80,7 +80,7 @@ export default {
     },
     /* 获取热门歌曲 */
     async queryHotMusic() {
-      const res = await hot({ user_id: this.room_admin_id });
+      const res = await hot({ userId: this.roomAdminId });
       this.isShowMusic = true;
       this.musicList = res.data;
     },

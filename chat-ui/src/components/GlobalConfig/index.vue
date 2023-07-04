@@ -9,7 +9,7 @@
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="开启所有提示">
-				<el-switch v-model="show_all_tips"></el-switch>
+				<el-switch v-model="showAllTips"></el-switch>
 			</el-form-item>
 			<el-form-item label="是否提示进房信息">
 				<el-switch v-model="showTipsJoinRoom"></el-switch>
@@ -81,12 +81,12 @@ export default {
         return this.setGlobalRoomConfig({ key: "showTipsPlayMusic", value });
       },
     },
-    show_all_tips: {
+    showAllTips: {
       get() {
-        return this.$store.state.show_all_tips;
+        return this.$store.state.showAllTips;
       },
       set(value) {
-        return this.setGlobalRoomConfig({ key: "show_all_tips", value });
+        return this.setGlobalRoomConfig({ key: "showAllTips", value });
       },
     },
     showTipsNotice: {

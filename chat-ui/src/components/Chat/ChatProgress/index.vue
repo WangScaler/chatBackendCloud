@@ -1,14 +1,14 @@
 <template>
-	<div v-if="music_info" class="progress">
+	<div v-if="musicInfo" class="progress">
 		<div class="bar" :style="{ width: `${width}%` }"></div>
 		<div class="current-music">
 			<icon name="progress-music" class="icon" scale="1.8" />
 			<span class="music-album">
-				{{ music_info.music_album }} -
-				{{ music_info.music_singer }}
+				{{ musicInfo.music_album }} -
+				{{ musicInfo.music_singer }}
 			</span>
 			<icon name="progress-collect" class="icon" scale="2.2" @click.native="collectMusic" />
-			<icon name="progress-switch" class="icon" scale="2.2" @click.native="$socket.client.emit('cutMusic', music_info)" />
+			<icon name="progress-switch" class="icon" scale="2.2" @click.native="$socket.client.emit('cutMusic', musicInfo)" />
 		</div>
 	</div>
 </template>
@@ -19,12 +19,12 @@ import { collectMusic } from "@/api/music";
 
 export default {
   computed: {
-    ...mapState(["current_music_time", "music_info"]),
+    ...mapState(["currentMusicTime", "musicInfo"]),
     width() {
-      if (!this.current_music_time || !this.music_info) return 0;
-      const { music_duration } = this.music_info;
+      if (!this.currentMusicTime || !this.musicInfo) return 0;
+      const { music_duration } = this.musicInfo;
       const width = (
-        (Number(this.current_music_time) / Number(music_duration)) *
+        (Number(this.currentMusicTime) / Number(music_duration)) *
         100
       ).toFixed(2);
       return width > 100 ? 100 : width;
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async collectMusic() {
-      await collectMusic(this.music_info);
+      await collectMusic(this.musicInfo);
       this.$message.success("歌曲收藏成功！");
     },
   },

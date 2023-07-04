@@ -13,28 +13,28 @@ export default {
 		state.token = token;
 	},
 
-	setUserInfo(state, user_info) {
-		state.user_info = user_info;
+	setUserInfo(state, userInfo) {
+		state.userInfo = userInfo;
 	},
 
-	/* 设置房间当前所在的房间room_id */
-	setRoomId(state, room_id) {
-		state.room_id = Number(room_id);
+	/* 设置房间当前所在的房间roomId */
+	setRoomId(state, roomId) {
+		state.roomId = Number(roomId);
 	},
 
 	/* 房间列表信息 */
-	setRoomList(state, room_list) {
-		state.room_list = room_list;
+	setRoomList(state, roomList) {
+		state.roomList = roomList;
 	},
 
 	/* 房间在线用户列表 */
-	setOnlineUserList(state, on_line_user_list) {
-		state.on_line_user_list = on_line_user_list;
+	setOnlineUserList(state, onLineUserList) {
+		state.onLineUserList = onLineUserList;
 	},
 
 	/* 房间房主信息 */
-	setRoomAdminInfo(state, room_admin_info) {
-		state.room_admin_info = room_admin_info;
+	setRoomAdminInfo(state, roomAdminInfo) {
+		state.roomAdminInfo = roomAdminInfo;
 	},
 
 	/**
@@ -43,28 +43,30 @@ export default {
 	 * @param {*} messageInfo [] || {} 数组表示第一次获取了历史信息或者上拉加载更多 {} 表示一条新消息， 直接存入即可
 	 */
 	setMessageDataList(state, messageInfo) {
+		console.log(messageInfo,">>>>>>>>>>>")
 		const isArray = Array.isArray(messageInfo);
 		let result = [];
 		isArray && (result = [...messageInfo, ...state.messageList]);
 		!isArray && (result = [...state.messageList, ...[messageInfo]]);
-		state.messageList = state.show_all_tips ? result : result.filter(t => t.message_type !== 'info');
+		console.log(result,">>>>>>>>>>>")
+		state.messageList = state.showAllTips ? result : result.filter(t => t.messageType !== 'info');
 	},
 
 	/* 清除所有公告信息 */
 	clearTipsInfo(state) {
-		state.messageList = state.messageList.filter(t => t.message_type !== 'info');
+		state.messageList = state.messageList.filter(t => t.messageType !== 'info');
 	},
 
 	/* 清除公告信息 */
 	clearNoticeInfo(state) {
-		state.messageList = state.messageList.filter(t => t.message_type !== 'notice');
+		state.messageList = state.messageList.filter(t => t.messageType !== 'notice');
 	},
 
 	/* 撤回消息修改列表信息 */
 	updateMessageList(state, { id, msg }) {
 		const messageIndex = state.messageList.findIndex(t => t.id === id);
-		messageIndex !== -1 && (state.messageList[messageIndex].message_content = msg);
-		messageIndex !== -1 && (state.messageList[messageIndex].message_type = 'info');
+		messageIndex !== -1 && (state.messageList[messageIndex].messageContent = msg);
+		messageIndex !== -1 && (state.messageList[messageIndex].messageType = 'info');
 		state.messageList.forEach(item => {
 			if (item?.quote_info?.quote_message_id === id) {
 				item.quote_info.quote_message_status = -1;
@@ -73,26 +75,26 @@ export default {
 	},
 
 	setCurrentMusicInfo(state, currentMusicInfo) {
-		const { music_info, music_lrc, music_src } = currentMusicInfo;
-		state.music_info = music_info;
-		state.music_lrc = music_lrc;
-		state.music_src = music_src;
+		const { musicInfo, musicLrc, musicSrc } = currentMusicInfo;
+		state.musicInfo = musicInfo;
+		state.musicLrc = musicLrc;
+		state.musicSrc = musicSrc;
 	},
 
-	setCurrentMusicStartTime(state, music_start_time) {
-		state.music_start_time = music_start_time;
+	setCurrentMusicStartTime(state, musicStartTime) {
+		state.musicStartTime = musicStartTime;
 	},
 
-	setCurrenMusicTime(state, current_music_time) {
-		state.current_music_time = current_music_time;
+	setCurrenMusicTime(state, currentMusicTime) {
+		state.currentMusicTime = currentMusicTime;
 	},
 
-	setQueueMusicList(state, music_queue_list) {
-		state.music_queue_list = music_queue_list;
+	setQueueMusicList(state, musicQueueList) {
+		state.musicQueueList = musicQueueList;
 	},
 
-	setUnReadMsgNum(state, un_read_msg_num) {
-		state.un_read_msg_num = un_read_msg_num;
+	setUnReadMsgNum(state, unReadMsgNum) {
+		state.unReadMsgNum = unReadMsgNum;
 	},
 
 	emptyMessageDataList(state) {
@@ -104,13 +106,13 @@ export default {
 	},
 
 	/* 设置预览图片 */
-	setPreImg(state, pre_img) {
-		state.pre_img = pre_img;
+	setPreImg(state, preImg) {
+		state.preImg = preImg;
 	},
 
 	/* 设置当前房间信息 */
-	setRoomInfo(state, room_info) {
-		state.room_info = room_info;
+	setRoomInfo(state, roomInfo) {
+		state.roomInfo = roomInfo;
 	},
 
 	/* 设置全局配置信息 */

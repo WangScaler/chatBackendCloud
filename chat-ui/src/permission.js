@@ -18,7 +18,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 	const hasToken = getToken();
 	if (hasToken) {
-		!store.state.user_info && (await store.dispatch('getUserInfo'));
+		!store.state.userInfo && (await store.dispatch('getUserInfo'));
 		next();
 	} else if (whiteList.indexOf(to.path) !== -1) {
 		next();

@@ -8,16 +8,16 @@
 
             <div class="form">
                 <el-form ref="registerForm" :model="form" :rules="rules">
-                    <el-form-item prop="user_name">
+                    <el-form-item prop="userName">
                         <el-input v-model="form.userName" clearable placeholder="您的账号" size="medium"></el-input>
                     </el-form-item>
-                    <el-form-item prop="user_nick">
+                    <el-form-item prop="userNick">
                         <el-input v-model="form.userNick" clearable placeholder="您的昵称" size="medium"></el-input>
                     </el-form-item>
-                    <el-form-item prop="user_email">
+                    <el-form-item prop="userEmail">
                         <el-input v-model="form.userEmail" clearable placeholder="您的邮箱" size="medium"></el-input>
                     </el-form-item>
-                    <el-form-item prop="user_password">
+                    <el-form-item prop="userPassword">
                         <el-input v-model="form.userPassword" clearable show-password placeholder="您的账户密码" size="medium"
                                   @keyup.native.enter="register"></el-input>
                     </el-form-item>

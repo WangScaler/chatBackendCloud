@@ -1,6 +1,6 @@
 <template>
 	<div class="music">
-		<audio v-if="music_src" ref="music" :src="music_src" autoplay @timeupdate="updateTime"></audio>
+		<audio v-if="musicSrc" ref="music" :src="musicSrc" autoplay @timeupdate="updateTime"></audio>
 	</div>
 </template>
 
@@ -15,10 +15,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["music_src", "music_start_time"]),
+    ...mapState(["musicSrc", "musicStartTime"]),
   },
   watch: {
-    music_start_time(n) {
+    musicStartTime(n) {
       this.time = n;
       this.specifiedTime(n);
     },
