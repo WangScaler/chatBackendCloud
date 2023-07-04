@@ -7,7 +7,7 @@
 			</div>
 			<div class="header-left-name">
 				<span class="visible-xl visible-lg">{{
-          (roomInfo && roomInfo.roomName) || "小九的聊天室"
+          (roomInfo && roomInfo.roomName) || "技术交流"
 				}}</span>
 			</div>
 			<div class="header-left-share flex_center" :data-clipboard-text="copyText" @click="share">
@@ -22,6 +22,10 @@
 			<div class="header-right-item flex_center" @click="toGit">
 				<icon name="github" scale="1.8" />
 				<span class="visible-xl visible-lg">开源地址</span>
+			</div>
+			<div class="header-right-item flex_center" @click="toBlog">
+				<icon name="chat-blog" scale="1.8"  />
+				<span class="visible-xl visible-md visible-sm">博客</span>
 			</div>
 			<div
 				v-if="Number(mineRoomInfo) === Number(roomId)"
@@ -124,7 +128,7 @@ export default {
       return !this.mineRoomInfo ? "创建房间" : "我的房间";
     },
     copyText() {
-      return "分享内容";
+      return "http:chat.dilicili.cn";
     },
     isMineRoom() {
       return Number(this.roomId) === Number(this.mineRoomInfo);
@@ -153,8 +157,11 @@ export default {
       );
       res.forEach((t) => (self[t].show = false));
     },
+	  toBlog() {
+		  window.open("https://blog.dilicili.cn");
+	  },
     toGit() {
-      window.open("https://github.com/longyanjiang/Nine-chat-frontend");
+      window.open("https://github.com/WangScaler/chatBackendCloud");
     },
     createOrJoinRoom() {
       if (!this.$socket.client.connected) return this.setSignInPopup(true);
