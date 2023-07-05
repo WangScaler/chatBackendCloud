@@ -1,10 +1,12 @@
 package com.wangscaler.chatsocket;
 import com.wangscaler.chatcore.annotation.EnableCustomConfig;
+import com.wangscaler.chatcore.annotation.EnableRyFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @EnableCustomConfig
+@EnableRyFeignClients
 @SpringBootApplication
 public class ChatSocketApplication {
 

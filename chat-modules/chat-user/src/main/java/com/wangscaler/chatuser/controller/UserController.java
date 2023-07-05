@@ -3,6 +3,7 @@ package com.wangscaler.chatuser.controller;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.constant.TokenConstants;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -97,17 +99,33 @@ public class UserController {
     }
 
     /**
-     * 查询所有的用户
+     * 查询用户信息
      *
      * @return JSONObject json对象
      */
     @GetMapping(value = "/getInfo")
-    @ApiOperation(value = "查询所有的用户")
+    @ApiOperation(value = "查询用户信息")
     public RestResult getInfo(HttpServletRequest request) {
         try {
             String token = JWTtokenUtils.getToken(request);
             Claims claims = JWTtokenUtils.parseToken(token);
             User userInfo = userService.getById(JWTtokenUtils.getUserId(claims));
+            return RestResult.success(userInfo);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return RestResult.error("登录失败");
+        }
+    }
+    /**
+     * 查询所选用户信息
+     *
+     * @return JSONObject json对象
+     */
+    @PostMapping(value = "/getAllInfo")
+    @ApiOperation(value = "查询所选用户信息")
+    public RestResult getInfo(HttpServletRequest request,@RequestBody List<String> userList) {
+        try {
+            List<User> userInfo = userService.list(new QueryWrapper<User>().in("id",userList));
             return RestResult.success(userInfo);
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.wangscaler.chatopenfeign.factory.RemoteRoomFallbackFactory
+com.wangscaler.chatopenfeign.factory.RemoteRoomFallbackFactory,\
+com.wangscaler.chatopenfeign.factory.RemoteUserFallbackFactory

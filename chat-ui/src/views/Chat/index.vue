@@ -195,9 +195,6 @@
                 this.lock = false;
                 this.showChatPanle = true;
                 this.initSocket();
-                if(MySocket.websocketState){
-                    this.getHistoryMessage()
-                }
             },
             /* random address */
             getRandomAddr() {
@@ -228,6 +225,9 @@
                     MySocket.websocket.onmessage = this.websocketOnMessage;
                     localStorage.roomId = this.roomId;
                     this.initLocalStorageConfig();
+                    if(MySocket.websocketState){
+                        this.getHistoryMessage()
+                    }
 
                 }
             },
@@ -243,6 +243,7 @@
                         this.$nextTick(() => {
                             this.showTipsJoinRoom &&
                             this.setMessageDataList({ messageType: "info", messageContent: info.data.data });
+                            this.setOnlineUserList(info.data.onLineUserList)
                         })
                         break;
                     case "error":

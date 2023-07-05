@@ -55,5 +55,9 @@ public class WebsocketConst {
      * 消息类型json data:key:type
      */
     public static final String MSG_TIP = "messageTip";
+    /**
+     * 消息类型json data:key:type
+     */
+    public static final String ONLINE_USERLIST = "onLineUserList";
 
 }
