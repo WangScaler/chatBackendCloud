@@ -2,17 +2,15 @@ package com.wangscaler.chatsocket.util;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.alibaba.fastjson2.JSONObject;
+import cn.hutool.json.JSONObject;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 import com.wangscaler.chatcore.web.domain.RestResult;
 import com.wangscaler.chatopenfeign.clients.RemoteUserService;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.websocket.WebSocket;
 
-import javax.websocket.Session;
-import java.util.ArrayList;
+import javax.websocket.Session;;
 import java.util.List;
-import java.util.Set;
 
 public class SendMessageUtil {
 
@@ -39,7 +37,16 @@ public class SendMessageUtil {
         welcomeMessage.put(WebsocketConst.ONLINE_USERLIST, Static.userService.getAllInfo(allUser).get(RestResult.DATA_TAG));
         new SendMessageThread(userList, NoticeUtils.getTopicData(key, welcomeMessage)).start();
     }
-
+    /**
+     * 发送群聊消息
+     *
+     * @param allUser 通知列表
+     */
+    public static void sendRoomMessage(JSONObject message, List<String> allUser) throws Exception {
+        String key = IdUtil.fastSimpleUUID();
+        String[] userList = allUser.toArray(new String[allUser.size()]);
+        new SendMessageThread(userList, message).start();
+    }
     /**
      * 发送欢迎加入房间的通知
      * sendJoinUser

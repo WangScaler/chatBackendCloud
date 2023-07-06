@@ -32,14 +32,23 @@ public class WebsocketConst {
     public static final String MSG_USER_ID = "userId";
 
     /**
+     * 消息json key:roomId
+     */
+    public static final String MSG_ROOM_ID = "roomId";
+
+    /**
      * 消息类型 heartcheck
      */
     public static final String NOTICE_CHECK = "heartcheck";
 
     /**
-     * 消息类型 user 用户消息
+     * 消息类型 user 单个用户消息
      */
     public static final String NOTICE_USER = "user";
+    /**
+     * 消息类型 room 群聊消息
+     */
+    public static final String NOTICE_ROOM = "room";
 
     /**
      * 消息类型 topic 系统通知

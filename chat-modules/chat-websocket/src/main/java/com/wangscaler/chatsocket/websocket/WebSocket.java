@@ -8,20 +8,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
-import com.wangscaler.chatcore.util.SpringContextUtils;
-import com.wangscaler.chatredis.listener.RedisListener;
 import com.wangscaler.chatredis.service.RedisService;
-import com.wangscaler.chatsocket.config.WebSocketConfig;
 import com.wangscaler.chatsocket.util.SendMessageUtil;
 import io.jsonwebtoken.Claims;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -119,10 +116,13 @@ public class WebSocket {
     public void onError(Throwable error) {
         System.out.println("onError......"+error.getMessage());
     }
+    @SneakyThrows
     @OnMessage
     public void onMessage(String message) {
-        //todo 现在有个定时任务刷，应该去掉
-        log.debug("【websocket消息】收到客户端消息:" + message);
+        JSONObject messageInfo = JSONUtil.parseObj(message);
+        if(WebsocketConst.NOTICE_ROOM.equals(messageInfo.get(WebsocketConst.MSG_TYPE))){
+            SendMessageUtil.sendRoomMessage(messageInfo, roomPool.get(messageInfo.get(WebsocketConst.MSG_ROOM_ID)));
+        }
         JSONObject obj = new JSONObject();
         //业务类型
         obj.put(WebsocketConst.MSG_TYPE, WebsocketConst.NOTICE_CHECK);
@@ -187,5 +187,4 @@ public class WebSocket {
         }
 
     }
-
 }

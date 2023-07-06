@@ -3,14 +3,23 @@
 本系统是聊天室后台的微服务版本，开源且免费使用。
 
 - 前后端分析模式，前端使用vue开发。
+
 - 后端采用Spring Boot、Spring Cloud & Alibaba。
+
 - 注册中心以及服务配置Nacos。
+
 - 网关GateWay
+
 - 负载均衡LoadBalancer
+
 - 服务调用OpenFeign
+
 - 服务降级熔断、流量控制Sentinel
+
 - 分布式事务选型Seata。
+
 - 前端项目改自开源项目[Nine-chat-frontend](https://github.com/longyanjiang/Nine-chat-frontend)
+
 - 后端项目借鉴优秀开源框架[若依](https://github.com/yangzongzhuan/RuoYi-Cloud) 、 [JeecgBoot](https://github.com/jeecgboot/jeecg-boot)
 
 ## 系统模块
@@ -36,11 +45,11 @@ com.wangscaler
 
 ## 接口文档
 
-接口文档使用swagger。通过网关gateway统一配置，访问地址http://localhost:8080/swagger-ui/index.html
+接口文档使用swagger。通过网关gateway统一配置，[访问地址](http://localhost:8080/swagger-ui/index.html) 。
 
 ## 数据监控
 
-使用druid动态数据源监控数据库信息。访问地址http://localhost:9201/druid/login.html
+使用druid动态数据源监控数据库信息。[访问地址](http://localhost:9201/druid/login.html) 。
 
 ## Nacos
 
@@ -74,11 +83,30 @@ sentinel降级熔断的配置信息拉取自nacos
 
 - 运行chat-user下的ChatUserApplication用户服务
 
+- 前端项目请参考[前端文档](./chat-ui/README.md)
+
 ### 注意
 
-因为前端项目来自开源项目，需要随着后端的开发逐步整合。目前以整合完毕
+因为前端项目来自开源项目，需要随着后端的开发逐步整合。目前已整合完毕
+
 - 注册
+
 - 登录
+
 - 集成websocket
+
 - 完成加入房间提示
+
 - 完成在线列表显示
+
+### 免责声明
+
+平台音乐数据来源于第三方网站，仅供学习交流使用，请勿用于商业用途，如有侵权联系删除。
+
+### 项目地址
+
+- [github](https://github.com/WangScaler/chatBackendCloud)
+
+- [gitee](https://gitee.com/WangScaler/chatBackendCloud)
+
+- [在线体验](http://chat.dilicili.cn)

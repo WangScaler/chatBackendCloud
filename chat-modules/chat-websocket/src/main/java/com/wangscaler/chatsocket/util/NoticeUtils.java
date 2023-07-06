@@ -1,7 +1,7 @@
 package com.wangscaler.chatsocket.util;
 
 
-import com.alibaba.fastjson2.JSONObject;
+import cn.hutool.json.JSONObject;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 
 /**

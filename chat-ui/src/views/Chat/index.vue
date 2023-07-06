@@ -17,7 +17,8 @@
                     <chat-progress/>
                 </div>
                 <div class="chat-container-footer">
-                    <chat-message-frame ref="messageFrame"/>
+                    <chat-message-frame
+                            ref="messageFrame"/>
                     <chat-lrc/>
                 </div>
                 <pre-img :data="preImg"/>
@@ -89,7 +90,7 @@
                     pagesize: 20,
                 },
                 count: 1,
-                newMsg: ''
+                newMsg: '',
             };
         },
         computed: {
@@ -228,7 +229,7 @@
                     if(MySocket.websocketState){
                         this.getHistoryMessage()
                     }
-
+                    Vue.prototype.$socket = MySocket;
                 }
             },
             websocketOnMessage(event) {
@@ -244,6 +245,12 @@
                             this.showTipsJoinRoom &&
                             this.setMessageDataList({ messageType: "info", messageContent: info.data.data });
                             this.setOnlineUserList(info.data.onLineUserList)
+                        })
+                        break;
+                    case "room":
+                        this.loading = true;
+                        this.$nextTick(() => {
+                            this.setMessageDataList(info.data.data);
                         })
                         break;
                     case "error":

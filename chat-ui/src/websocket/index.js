@@ -16,6 +16,7 @@ const MySocket = {
 		this.resetHeartbeat()
 	},
 	reconnect() {
+		console.log(">>>>>>>>>")
 		if (MySocket.lockReconnect) return;
 		MySocket.reconnectNum += 1;
 		if (MySocket.reconnectNum === 3) {
@@ -37,9 +38,7 @@ const MySocket = {
 			if (MySocket.websocket) {
 				MySocket.websocket.send(JSON.stringify({ messageType: "heartcheck" ,data:"心跳响应"}));
 				MySocket.websocketState = false;
-				console.log(MySocket.websocketState,"??????1???????")
 				MySocket.serverTimeout = setTimeout(() => {
-					console.log(MySocket.websocketState,"??????3???????")
 					if (!MySocket.websocketState) {
 						MySocket.websocket.onclose()
 					} else {
@@ -56,7 +55,7 @@ const MySocket = {
 		MySocket.sendMsg(JSON.stringify({ messageType: "heartcheck" ,data:"心跳响应"}));
 	},
 	websocketOnError(error) {
-		console.log(error);
+		console.log(error,"错误");
 		MySocket.reconnect();
 	},
 	websocketOnClose() {

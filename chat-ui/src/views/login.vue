@@ -29,7 +29,7 @@
 
 <script>
 import { login } from "@/api/user";
-import { setToken } from '@/utils/auth';
+import { setToken,setUser,getUserByToken } from '@/utils/auth';
 
 export default {
   components: {},
@@ -74,8 +74,7 @@ export default {
 				return
 			}
 			setToken(res.data)
-			localStorage.userName = this.form.userName;
-			localStorage.userPassword = this.form.userPassword;
+			setUser(getUserByToken(res.data),this.form.userName,this.form.userPassword)
 			this.$router.push("/");
 		})
 		.catch((err) => {
