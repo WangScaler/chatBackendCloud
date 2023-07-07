@@ -5,7 +5,7 @@ export default {
 	roomId: state => state.roomId,
 	mineRoomBg: state => state.userInfo && state.userInfo.userRoomBg,
 	mineRoomInfo: state => state.userInfo && state.userInfo.userRoomId,
-	mineId: state => state.userInfo && state.userInfo.userId,
+	mineId: state => state.userInfo && state.userInfo.id,
 	onLineUserList: state => state.onLineUserList,
 	onLineUserNum: state => state.onLineUserList.length,
 	onLineRoomNum: state => state.roomList.length,

@@ -11,7 +11,7 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 13/06/2023 09:49:39
+ Date: 07/07/2023 10:51:53
 */
 
 SET NAMES utf8mb4;
@@ -55,6 +55,11 @@ CREATE TABLE `tb_message`  (
   `message_status` int(0) NOT NULL DEFAULT 1 COMMENT '消息状态： 1: 正常 -1: 已撤回',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 45757 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_message
+-- ----------------------------
+INSERT INTO `tb_message` VALUES (1, '2021-11-24 14:40:00.625804', '2021-11-24 14:40:00.625804', NULL, 1, 888, 'test', 'text', NULL, NULL, 1);
 
 -- ----------------------------
 -- Table structure for tb_music
@@ -486,17 +491,17 @@ CREATE TABLE `tb_user`  (
   `user_email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户邮箱',
   `user_avatar` varchar(600) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户头像',
   `user_role` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'viewer' COMMENT '用户权限',
-  `user_sign` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '每个人都有签名、我希望你也有...',
   `user_room_bg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户个人聊天室背景图',
   `user_room_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户个人创建的房间Id',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `IDX_8b431f1c988a8047f9ac6b792f`(`user_email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 936 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  `user_sign` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '每个人都有签名、我希望你也有...',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 953 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES (1, '2021-11-24 14:29:26.232728', '2023-06-13 09:40:05.993297', NULL, 'wangscaler', 'wangscaler', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@163.com', 'https://public-1300678944.cos.ap-shanghai.myqcloud.com/blog/1673596614276u%3D421695242%2C4049383228%26fm%3D253%26fmt%3Dauto%26app%3D138%26f%3DJPEG.webp', 'admin', 'Do you love && Love you do!!!', NULL, '888');
+INSERT INTO `tb_user` VALUES (1, '2023-07-03 15:22:11.770291', '2023-07-06 16:47:21.888149', NULL, 'test', 'test', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@163.com', 'https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 'viewer', NULL, NULL, '每个人都有签名、我希望你也有...');
+INSERT INTO `tb_user` VALUES (2, '2023-07-05 16:44:45.033393', '2023-07-07 10:51:25.997693', NULL, 'wang', 'wang', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@qq.com', 'https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 'viewer', NULL, NULL, '每个人都有签名、我希望你也有...');
 
 -- ----------------------------
 -- Table structure for undo_log

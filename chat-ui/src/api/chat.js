@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-export const history = data => request('post', '/message/history', data);
+export const history = data => request('get', '/message/history', data);
 
 export const createRoom = data => request('post', '/message/createRoom', data);
 

@@ -66,8 +66,8 @@ export default {
 		messageIndex !== -1 && (state.messageList[messageIndex].messageContent = msg);
 		messageIndex !== -1 && (state.messageList[messageIndex].messageType = 'info');
 		state.messageList.forEach(item => {
-			if (item?.quote_info?.quote_message_id === id) {
-				item.quote_info.quote_message_status = -1;
+			if (item?.quoteInfo?.quoteMessageId === id) {
+				item.quoteInfo.quoteMessageStatus = -1;
 			}
 		});
 	},

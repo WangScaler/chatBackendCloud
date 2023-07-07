@@ -270,11 +270,11 @@
                     roomId: this.roomId,
                     ...this.messageParams,
                 });
-                this.stopLoadmore = res.data.length < this.messageParams.pagesize;
+                this.stopLoadmore = res.data.total < this.messageParams.pagesize;
                 this.stopLoadmore &&
                 this.messageParams.page > 1 &&
                 this.$message.warning("已加载完全部历史消息了！");
-                this.setMessageDataList(res.data);
+                this.setMessageDataList(res.data.records);
             },
 
             /* 上拉获取更多消息 */

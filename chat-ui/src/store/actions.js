@@ -8,8 +8,7 @@ export default {
 	async getUserInfo({ commit }) {
 		return new Promise(resolve => {
 			getInfo().then(res => {
-				const { userInfo } = res.data;
-				commit('setUserInfo', userInfo);
+				commit('setUserInfo', res.data);
 				resolve(true);
 			});
 		});

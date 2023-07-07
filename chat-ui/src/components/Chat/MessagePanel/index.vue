@@ -42,49 +42,49 @@
 						</span>
 						<!--  引用消息 -->
 						<span
-							v-if="item.quote_info"
+							v-if="item.quoteInfo"
 							:class="[
                 'quote-panel',
-                { recall: item.quote_info.quote_message_status === -1 },
+                { recall: item.quoteInfo.quoteMessageStatus === -1 },
               ]"
-							@click.stop="handlerJumpMessage(item.quote_info.quote_message_id)"
+							@click.stop="handlerJumpMessage(item.quoteInfo.quoteMessageId)"
 						>
-							<span v-if="item.quote_info.quote_message_status === 1" style="margin: 5px">{{ item.quote_info.quote_userNick }}:</span>
+							<span v-if="item.quoteInfo.quoteMessageStatus === 1" style="margin: 5px">{{ item.quoteInfo.quoteUserNick }}:</span>
 							<!-- 引用消息已被撤回 -->
-							<span v-if="item.quote_info.quote_message_status === -1"> 引用消息已被撤回</span>
+							<span v-if="item.quoteInfo.quoteMessageStatus === -1"> 引用消息已被撤回</span>
 							<!-- 文字消息引用 -->
 							<span
 								v-if="
-                  item.quote_info.quote_messageType === 'text' &&
-                  item.quote_info.quote_message_status === 1
+                  item.quoteInfo.quoteMessageType === 'text' &&
+                  item.quoteInfo.quoteMessageStatus === 1
                 "
 							>
-								{{ item.quote_info.quote_messageContent }}</span
+								{{ item.quoteInfo.quoteMessageContent }}</span
 							>
 							<!-- 图片消息引用 包含表情包 -->
 							<img
 								v-if="
-                  imgMessageType.includes(item.quote_info.quote_messageType) &&
-                  item.quote_info.quote_message_status === 1
+                  imgMessageType.includes(item.quoteInfo.quoteMessageType) &&
+                  item.quoteInfo.quoteMessageStatus === 1
                 "
-								:src="item.quote_info.quote_messageContent.url"
+								:src="item.quoteInfo.quoteMessageContent.url"
 								class="message-img"
 							/>
 							<!-- 特殊格式文件引用 -->
 							<span
 								v-if="
-                  otherFileType(item.quote_info.quote_messageType) &&
-                  item.quote_info.quote_message_status === 1
+                  otherFileType(item.quoteInfo.quoteMessageType) &&
+                  item.quoteInfo.quoteMessageStatus === 1
                 "
 								class="msg-other quote-msg-other"
 							>
 								<div class="msg-other-panel">
 									<div class="file-info">
 										<span class="file-info-name">{{
-                      item.quote_info.quote_messageContent.name
+                      item.quoteInfo.quoteMessageContent.name
 										}}</span>
 										<span class="file-info-size">{{
-                      item.quote_info.quote_messageContent.size
+                      item.quoteInfo.quoteMessageContent.size
 										}}</span>
 									</div>
 									<icon class="file-icon" name="chat-frame-unknow-file" scale="4" />

@@ -83,6 +83,8 @@ sentinel降级熔断的配置信息拉取自nacos
 
 - 运行chat-user下的ChatUserApplication用户服务
 
+- 运行chat-message下的ChatMessageApplication消息服务
+
 - 前端项目请参考[前端文档](./chat-ui/README.md)
 
 ### 注意
@@ -98,6 +100,8 @@ sentinel降级熔断的配置信息拉取自nacos
 - 完成加入房间提示
 
 - 完成在线列表显示
+
+- 完成历史记录的显示
 
 ### 免责声明
 
