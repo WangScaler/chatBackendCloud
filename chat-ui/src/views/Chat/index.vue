@@ -26,7 +26,7 @@
         </transition>
 
         <!--		 弹幕-->
-<!--        <Barrage v-if="!lock" :new-msg="newMsg" class="chat-barrage-wapper"/>-->
+        <!--        <Barrage v-if="!lock" :new-msg="newMsg" class="chat-barrage-wapper"/>-->
 
         <!--		 弹幕聊天场景-->
         <transition name="message-panel" mode="out-in">
@@ -105,7 +105,7 @@
                 "showTipsPlayMusic",
                 "showTipsNotice"
             ]),
-            ...mapGetters(["roomInfo", "mineRoomBg"]),
+            ...mapGetters(["roomInfo", "mineRoomBg", "mineId"]),
             roomBg() {
                 return (
                     this.mineRoomBg || this.roomInfo?.roomBgImg || defaultRoomBg
@@ -137,7 +137,7 @@
         },
 
         beforeDestroy() {
-            this.showPopup=false
+            this.showPopup = false
             MySocket.websocketOnClose()
             document.removeEventListener("keyup", this.keyboardEvent, true);
         },
@@ -217,18 +217,14 @@
             async initSocket() {
                 const token = getToken()
                 if (!window.returnCitySN && this.count <= 3) {
-
                     this.count++
-                    setTimeout(() => this.initSocket(), 50);
+                    return setTimeout(() => this.initSocket(), 50);
                 } else {
                     const cname = window.returnCitySN ? window.returnCitySN.cname : this.getRandomAddr();
                     MySocket.initWebSocket(url.replace("TOKEN", token).replace("ADDRESS", cname));
                     MySocket.websocket.onmessage = this.websocketOnMessage;
                     localStorage.roomId = this.roomId;
                     this.initLocalStorageConfig();
-                    if(MySocket.websocketState){
-                        this.getHistoryMessage()
-                    }
                     Vue.prototype.$socket = MySocket;
                 }
             },
@@ -242,8 +238,10 @@
                     case "topic":
                         this.loading = true;
                         this.$nextTick(() => {
+                            if (this.mineId.toString() === info.data.userId)
+                                this.getHistoryMessage()
                             this.showTipsJoinRoom &&
-                            this.setMessageDataList({ messageType: "info", messageContent: info.data.data });
+                            this.setMessageDataList({messageType: "info", messageContent: info.data.data});
                             this.setOnlineUserList(info.data.onLineUserList)
                         })
                         break;

@@ -32,12 +32,13 @@ public class SendMessageUtil {
      *
      * @param allUser 通知列表
      */
-    public static void sendJoinUser(String userName, String address, Session session, List<String> allUser) throws Exception {
+    public static void sendJoinUser(String userName, String address, String userId, List<String> allUser) throws Exception {
         String key = IdUtil.fastSimpleUUID();
         String[] userList = allUser.toArray(new String[allUser.size()]);
         JSONObject welcomeMessage = new JSONObject();
         welcomeMessage.put(WebsocketConst.MSG_TIP, new StringBuffer("欢迎").append(userName).append("加入房间!").toString());
         welcomeMessage.put(WebsocketConst.MSG_DATA, new StringBuffer("来自").append(address).append("的").append(userName).append("进入房间了！"));
+        welcomeMessage.put(WebsocketConst.MSG_USER_ID, userId);
         welcomeMessage.put(WebsocketConst.ONLINE_USERLIST, Static.userService.getAllInfo(allUser).get(RestResult.DATA_TAG));
         new SendMessageThread(userList, NoticeUtils.getTopicData(key, welcomeMessage)).start();
     }

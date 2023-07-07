@@ -95,7 +95,7 @@ public class WebSocket {
             }
             roomPool.get(roomId).add(userId);
             userRoomMap.put(userId,roomId);
-            SendMessageUtil.sendJoinUser(claims.get(SecurityConstants.DETAILS_USERNAME).toString(), address, session, roomPool.get(roomId));
+            SendMessageUtil.sendJoinUser(claims.get(SecurityConstants.DETAILS_USERNAME).toString(), address, userId, roomPool.get(roomId));
             log.info("【websocket消息】有新的连接，总数为:" + webSockets.size());
         } catch (Exception e) {
             log.error(e.getMessage());
