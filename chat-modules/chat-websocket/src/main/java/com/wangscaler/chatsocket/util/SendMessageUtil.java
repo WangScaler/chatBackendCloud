@@ -3,9 +3,12 @@ package com.wangscaler.chatsocket.util;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 import com.wangscaler.chatcore.web.domain.RestResult;
+import com.wangscaler.chatopenfeign.clients.RemoteMessageService;
 import com.wangscaler.chatopenfeign.clients.RemoteUserService;
+import com.wangscaler.chatopenfeign.domain.Message;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.websocket.WebSocket;
 
@@ -21,6 +24,7 @@ public class SendMessageUtil {
         private static RedisService redisService = SpringUtil.getBean(RedisService.class);
         private static WebSocket webSocket = SpringUtil.getBean(WebSocket.class);
         private static RemoteUserService userService = SpringUtil.getBean(RemoteUserService.class);
+        private static RemoteMessageService messageService = SpringUtil.getBean(RemoteMessageService.class);
     }
 
     /**
@@ -42,10 +46,11 @@ public class SendMessageUtil {
      *
      * @param allUser 通知列表
      */
-    public static void sendRoomMessage(JSONObject message, List<String> allUser) throws Exception {
+    public static void sendRoomMessage(Message message, List<String> allUser) throws Exception {
         String key = IdUtil.fastSimpleUUID();
         String[] userList = allUser.toArray(new String[allUser.size()]);
-        new SendMessageThread(userList, message).start();
+        RestResult restResult = Static.messageService.add(message);
+        new SendMessageThread(userList,NoticeUtils.getMessageData(key,message.getUserId(),restResult.get(RestResult.DATA_TAG))).start();
     }
     /**
      * 发送欢迎加入房间的通知

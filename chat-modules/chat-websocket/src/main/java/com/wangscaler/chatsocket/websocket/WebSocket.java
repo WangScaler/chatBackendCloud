@@ -9,12 +9,15 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.wangscaler.chatcore.constant.RedisConstants;
 import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
+import com.wangscaler.chatopenfeign.domain.Message;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.util.SendMessageUtil;
 import io.jsonwebtoken.Claims;
@@ -119,9 +122,10 @@ public class WebSocket {
     @SneakyThrows
     @OnMessage
     public void onMessage(String message) {
-        JSONObject messageInfo = JSONUtil.parseObj(message);
-        if(WebsocketConst.NOTICE_ROOM.equals(messageInfo.get(WebsocketConst.MSG_TYPE))){
-            SendMessageUtil.sendRoomMessage(messageInfo, roomPool.get(messageInfo.get(WebsocketConst.MSG_ROOM_ID)));
+        JSONObject messageJson = JSONUtil.parseObj(message);
+        if(WebsocketConst.NOTICE_ROOM.equals(messageJson.get(WebsocketConst.MSG_TYPE))){
+            Message messageInfo = JSONUtil.toBean((JSONObject) messageJson.get(WebsocketConst.MSG_DATA),Message.class);
+            SendMessageUtil.sendRoomMessage(messageInfo, roomPool.get(String.valueOf(messageInfo.getRoomId())));
         }
         JSONObject obj = new JSONObject();
         //业务类型

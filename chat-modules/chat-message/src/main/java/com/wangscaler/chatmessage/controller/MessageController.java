@@ -2,18 +2,22 @@ package com.wangscaler.chatmessage.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangscaler.chatcore.util.AESEncryptUtils;
 import com.wangscaler.chatcore.web.domain.RestResult;
 import com.wangscaler.chatmessage.bean.Message;
 import com.wangscaler.chatmessage.model.MessageUserInfo;
 import com.wangscaler.chatmessage.service.MessageService;
 import com.wangscaler.chatopenfeign.clients.RemoteUserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -52,20 +56,34 @@ public class MessageController {
             Iterator<Message> iterator = messageResult.iterator();
             while (iterator.hasNext()) {
                 Message message = iterator.next();
-                RestResult userInfo = remoteUserService.getAllInfo(Arrays.asList(String.valueOf(message.getUserId())));
-                MessageUserInfo messageUserInfo = new MessageUserInfo();
-                BeanUtil.copyProperties(message,messageUserInfo);
-                List<Object> userInfoData = (List<Object>) userInfo.get("data");
-                messageUserInfo.setUserInfo(userInfoData.get(0));
+                MessageUserInfo messageUserInfo = messageService.toMessageInfo(message);
                 messageUserInfoList.add(messageUserInfo);
             }
             IPage<MessageUserInfo> messageUserInfoIPage = new Page<MessageUserInfo>();
-            BeanUtil.copyProperties(messageList,messageUserInfoIPage);
+            BeanUtil.copyProperties(messageList, messageUserInfoIPage);
             messageUserInfoIPage.setRecords(messageUserInfoList);
             return RestResult.success(messageUserInfoIPage);
         } catch (Exception e) {
             log.error(e.getMessage());
             return RestResult.error("查询历史失败");
+        }
+    }
+
+    /**
+     * 新增消息
+     *
+     * @return JSONObject json对象
+     */
+    @PostMapping(value = "/add")
+    @ApiOperation(value = "新消息")
+    public RestResult add(@RequestBody Message message) {
+        try {
+            messageService.save(message);
+            MessageUserInfo messageUserInfo = messageService.toMessageInfo(messageService.getById(message.getId()));
+            return RestResult.success(messageUserInfo);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return RestResult.error("消息保存失败");
         }
     }
 

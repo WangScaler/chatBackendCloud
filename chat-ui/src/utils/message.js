@@ -15,9 +15,12 @@ export const sendMessage = (message, quoteMessage) => {
         roomId: getRoomId(),
         messageType: enums.MessageType.ROOM,//消息类型
         data: {
+            userId: getUserId(),
             messageType: textMessageType,
-            data: message,//消息
-            quoteMessage: quoteMessage == null ? '' : quoteMessage//引用的消息
+            messageContent: message,//消息
+            roomId:getRoomId(),
+            quoteUserId : quoteMessage&&quoteMessage.userId?quoteMessage.userId:"",
+            quoteMessageId:quoteMessage&&quoteMessage.id?quoteMessage.id:""
         }
     }
     return JSON.stringify(messageInfo)

@@ -103,6 +103,8 @@ sentinel降级熔断的配置信息拉取自nacos
 
 - 完成历史记录的显示
 
+- 完成在线聊天
+
 ### 免责声明
 
 平台音乐数据来源于第三方网站，仅供学习交流使用，请勿用于商业用途，如有侵权联系删除。
@@ -114,3 +116,7 @@ sentinel降级熔断的配置信息拉取自nacos
 - [gitee](https://gitee.com/WangScaler/chatBackendCloud)
 
 - [在线体验](http://chat.dilicili.cn)
+
+### 微信交流群
+
+![微信交流群](http://chat.dilicili.cn/static/img/wechat.jpg)

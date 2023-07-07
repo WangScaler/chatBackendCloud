@@ -250,11 +250,11 @@
                     case "room":
                         this.loading = true;
                         this.$nextTick(() => {
-                            this.setMessageDataList(info.data.data);
+                            this.setMessageDataList(info.data);
                         })
                         break;
                     case "error":
-                        this.$message.error(info.data.toString());
+                        this.$message.error(info.data);
                         this.logout()
                         this.loading = false;
                         break;
