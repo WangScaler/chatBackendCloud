@@ -1,5 +1,6 @@
 package com.wangscaler.chatsocket.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
@@ -9,11 +10,13 @@ import com.wangscaler.chatopenfeign.clients.RemoteMessageService;
 import com.wangscaler.chatopenfeign.clients.RemoteRoomService;
 import com.wangscaler.chatopenfeign.clients.RemoteUserService;
 import com.wangscaler.chatopenfeign.domain.Message;
+import com.wangscaler.chatopenfeign.domain.Room;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.websocket.WebSocket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class SendMessageUtil {
@@ -31,14 +34,15 @@ public class SendMessageUtil {
 
     /**
      * 发送欢迎加入房间的通知
+     *
      * @param userName 用户名
-     * @param address 地址
-     * @param userId 用户id
-     * @param allUser 通知列表
-     * @param roomSet 在线房间
+     * @param address  地址
+     * @param userId   用户id
+     * @param roomPool 房间列表
+     * @param roomId   当前房间
      */
-    public static void sendJoinUser(String userName, String address, String userId, List<String> allUser, Set<String> roomSet) throws Exception {
-
+    public static void sendJoinUser(String userName, String address, String userId, Map<String, List<String>> roomPool, String roomId) throws Exception {
+        List<String> allUser = roomPool.get(roomId);
         String key = IdUtil.fastSimpleUUID();
         String[] userList = allUser.toArray(new String[allUser.size()]);
         JSONObject welcomeMessage = new JSONObject();
@@ -46,9 +50,18 @@ public class SendMessageUtil {
         welcomeMessage.put(WebsocketConst.MSG_DATA, new StringBuffer("来自").append(address).append("的").append(userName).append("进入房间了！"));
         welcomeMessage.put(WebsocketConst.MSG_USER_ID, userId);
         welcomeMessage.put(WebsocketConst.ONLINE_USERLIST, Static.userService.getAllInfo(allUser).get(RestResult.DATA_TAG));
-        welcomeMessage.put(WebsocketConst.ROOM_LIST, Static.remoteRoomService.findRoomList(new ArrayList<String>(roomSet)).get(RestResult.DATA_TAG));
+        List<Object> roomList = (List<Object>) Static.remoteRoomService.findRoomList(new ArrayList<String>(roomPool.keySet())).get(RestResult.DATA_TAG);
+        List<Room>roomListNew = new ArrayList<Room>(roomList.size());
+        for (int i = 0; i < roomList.size(); i++) {
+            Room room = new Room();
+            BeanUtil.copyProperties(roomList.get(i),room);
+            roomListNew.add(room);
+        }
+        roomListNew.iterator().forEachRemaining(room -> room.setOnLineNums(roomPool.get(String.valueOf(room.getRoomId())).size()));
+        welcomeMessage.put(WebsocketConst.ROOM_LIST, roomListNew);
         new SendMessageThread(userList, NoticeUtils.getTopicData(key, welcomeMessage)).start();
     }
+
     /**
      * 发送群聊消息
      *
@@ -58,8 +71,9 @@ public class SendMessageUtil {
         String key = IdUtil.fastSimpleUUID();
         String[] userList = allUser.toArray(new String[allUser.size()]);
         RestResult restResult = Static.messageService.add(message);
-        new SendMessageThread(userList,NoticeUtils.getMessageData(key,message.getUserId(),restResult.get(RestResult.DATA_TAG))).start();
+        new SendMessageThread(userList, NoticeUtils.getMessageData(key, message.getUserId(), restResult.get(RestResult.DATA_TAG))).start();
     }
+
     /**
      * 发送欢迎加入房间的通知
      * sendJoinUser

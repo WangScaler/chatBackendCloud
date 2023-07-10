@@ -18,7 +18,7 @@
 				<div class="online-item-info">
 					<div class="online-item-info-name">
 						<span>
-							<span class="room-num">({{ item.on_line_nums }})</span>
+							<span class="room-num">({{ item.onLineNums }})</span>
 							{{ item.roomName }}
 						</span>
 						<!-- 888官方房间 -->
