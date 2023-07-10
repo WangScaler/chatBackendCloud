@@ -243,6 +243,7 @@
                             this.showTipsJoinRoom &&
                             this.setMessageDataList({messageType: "info", messageContent: info.data.data});
                             this.setOnlineUserList(info.data.onLineUserList)
+                            this.setRoomList(info.data.roomList)
                         })
                         break;
                     case "room":

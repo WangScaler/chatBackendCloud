@@ -68,5 +68,9 @@ public class WebsocketConst {
      * 消息类型json data:key:type
      */
     public static final String ONLINE_USERLIST = "onLineUserList";
+    /**
+     * 消息类型json data:key:type
+     */
+    public static final String ROOM_LIST = "roomList";
 
 }
