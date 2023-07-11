@@ -16,11 +16,15 @@ import java.time.LocalDateTime;
  * @Versiion：1.0
  */
 @Data
-public class MessageUserInfo extends Message {
+public class MessageInfo extends Message {
     /**
      * 用户信息
      */
     private User userInfo;
+    /**
+     * 引用信息
+     */
+    private QuoteInfo quoteInfo;
 
 
 }

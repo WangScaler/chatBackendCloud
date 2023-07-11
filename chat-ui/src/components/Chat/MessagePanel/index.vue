@@ -45,18 +45,18 @@
 							v-if="item.quoteInfo"
 							:class="[
                 'quote-panel',
-                { recall: item.quoteInfo.quoteMessageStatus === -1 },
+                { recall: item.quoteInfo.quoteMessageStatus === '-1' },
               ]"
 							@click.stop="handlerJumpMessage(item.quoteInfo.quoteMessageId)"
 						>
-							<span v-if="item.quoteInfo.quoteMessageStatus === 1" style="margin: 5px">{{ item.quoteInfo.quoteUserNick }}:</span>
+							<span v-if="item.quoteInfo.quoteMessageStatus === '1'" style="margin: 5px">{{ item.quoteInfo.quoteUserNick }}:</span>
 							<!-- 引用消息已被撤回 -->
-							<span v-if="item.quoteInfo.quoteMessageStatus === -1"> 引用消息已被撤回</span>
+							<span v-if="item.quoteInfo.quoteMessageStatus === '-1'"> 引用消息已被撤回</span>
 							<!-- 文字消息引用 -->
 							<span
 								v-if="
                   item.quoteInfo.quoteMessageType === 'text' &&
-                  item.quoteInfo.quoteMessageStatus === 1
+                  item.quoteInfo.quoteMessageStatus === '1'
                 "
 							>
 								{{ item.quoteInfo.quoteMessageContent }}</span
@@ -65,7 +65,7 @@
 							<img
 								v-if="
                   imgMessageType.includes(item.quoteInfo.quoteMessageType) &&
-                  item.quoteInfo.quoteMessageStatus === 1
+                  item.quoteInfo.quoteMessageStatus === '1'
                 "
 								:src="item.quoteInfo.quoteMessageContent.url"
 								class="message-img"
@@ -74,7 +74,7 @@
 							<span
 								v-if="
                   otherFileType(item.quoteInfo.quoteMessageType) &&
-                  item.quoteInfo.quoteMessageStatus === 1
+                  item.quoteInfo.quoteMessageStatus === '1'
                 "
 								class="msg-other quote-msg-other"
 							>
