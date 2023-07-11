@@ -20,6 +20,16 @@ public class RemoteMessageFallbackFactory implements FallbackFactory<RemoteMessa
             public RestResult add(Message message) {
                 return RestResult.error("新增消息失败:" + cause.getMessage());
             }
+
+            @Override
+            public RestResult getMessageById(String id) {
+                return RestResult.error("获取单个消息失败:" + cause.getMessage());
+            }
+
+            @Override
+            public RestResult update(Message message) {
+                return RestResult.error("修改消息失败:" + cause.getMessage());
+            }
         };
     }
 }

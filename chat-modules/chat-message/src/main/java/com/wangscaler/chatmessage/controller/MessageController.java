@@ -15,12 +15,10 @@ import com.wangscaler.chatopenfeign.clients.RemoteUserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -39,7 +37,7 @@ import java.util.List;
 public class MessageController {
     @Resource
     private MessageService messageService;
-    @Autowired
+    @Resource
     private RemoteUserService remoteUserService;
 
     /**
@@ -87,4 +85,38 @@ public class MessageController {
         }
     }
 
+    /**
+     * 根据id查询消息信息
+     *
+     * @return JSONObject json对象
+     */
+    @GetMapping(value = "/findOne")
+    @ApiOperation(value = "修改消息")
+    public RestResult getMessageById(@RequestParam("id")String id) {
+        try {
+            Message message = messageService.getById(id);
+            return RestResult.success(message);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return RestResult.error("查询历史失败");
+        }
+    }
+    /**
+     * 修改消息
+     *
+     * @return JSONObject json对象
+     */
+    @PostMapping(value = "/update")
+    @ApiOperation(value = "修改消息")
+    public RestResult update(@RequestBody Message message) {
+        try {
+            message.setUpdatedAt(LocalDateTime.now());
+            message.setMessageStatus("-1");
+            messageService.saveOrUpdate(message);
+            return RestResult.success("修改成功");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return RestResult.error("消息保存失败");
+        }
+    }
 }

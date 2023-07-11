@@ -47,12 +47,12 @@ export default {
 		let result = [];
 		isArray && (result = [...messageInfo, ...state.messageList]);
 		!isArray && (result = [...state.messageList, ...[messageInfo]]);
-		state.messageList = state.showAllTips ? result : result.filter(t => t.messageType !== 'info');
+		state.messageList = state.showAllTips ? result : result.filter(t => t.messageType !== 'tip');
 	},
 
 	/* 清除所有公告信息 */
 	clearTipsInfo(state) {
-		state.messageList = state.messageList.filter(t => t.messageType !== 'info');
+		state.messageList = state.messageList.filter(t => t.messageType !== 'tip');
 	},
 
 	/* 清除公告信息 */
@@ -61,10 +61,10 @@ export default {
 	},
 
 	/* 撤回消息修改列表信息 */
-	updateMessageList(state, { id, msg }) {
-		const messageIndex = state.messageList.findIndex(t => t.id === id);
+	updateMessageList(state, { messageId, msg }) {
+		const messageIndex = state.messageList.findIndex(t => t.id === messageId);
 		messageIndex !== -1 && (state.messageList[messageIndex].messageContent = msg);
-		messageIndex !== -1 && (state.messageList[messageIndex].messageType = 'info');
+		messageIndex !== -1 && (state.messageList[messageIndex].messageType = 'tip');
 		state.messageList.forEach(item => {
 			if (item?.quoteInfo?.quoteMessageId === id) {
 				item.quoteInfo.quoteMessageStatus = -1;

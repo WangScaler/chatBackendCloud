@@ -26,4 +26,6 @@ public interface RemoteRoomService {
      */
     @PostMapping("/list")
     public RestResult findRoomList(@RequestBody List<String> roomList);
+
+
 }

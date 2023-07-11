@@ -49,6 +49,14 @@ public class WebsocketConst {
      * 消息类型 room 群聊消息
      */
     public static final String NOTICE_ROOM = "room";
+    /**
+     * 消息类型 tip 提示消息
+     */
+    public static final String NOTICE_TIP = "tip";
+    /**
+     * 消息类型 recallMessage 撤回消息
+     */
+    public static final String NOTICE_RECALLMESSAGE = "recallMessage";
 
     /**
      * 消息类型 topic 系统通知

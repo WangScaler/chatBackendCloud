@@ -2,7 +2,7 @@ import {getUserId, getRoomId} from '@/utils/auth';
 import {enums} from '@/utils/common'
 
 const imgMessageType = ["png", "jpg", "jpeg", "gif", "emo"] // emo 是特殊类型的表情包 也属于图片
-const tipsMessageType = ["notice", "info"] // 中间显示的类型 目前有公搞和一些进出切歌房间这类提示
+const tipsMessageType = ["notice", "tip"] // 中间显示的类型 目前有公搞和一些进出切歌房间这类提示
 const textMessageType = "text"
 /**
  * @desc 封装好发送消息的格式
@@ -18,9 +18,23 @@ export const sendMessage = (message, quoteMessage) => {
             userId: getUserId(),
             messageType: textMessageType,
             messageContent: message,//消息
-            roomId:getRoomId(),
-            quoteUserId : quoteMessage&&quoteMessage.userId?quoteMessage.userId:"",
-            quoteMessageId:quoteMessage&&quoteMessage.id?quoteMessage.id:""
+            roomId: getRoomId(),
+            quoteUserId: quoteMessage && quoteMessage.userId ? quoteMessage.userId : "",
+            quoteMessageId: quoteMessage && quoteMessage.id ? quoteMessage.id : ""
+        }
+    }
+    return JSON.stringify(messageInfo)
+};
+export const sendRecallMessage = (messageId, userNick) => {
+    var messageInfo = {
+        userId: getUserId(),//发送者
+        msgId: getUserId(),//暂时无用，随便填写
+        roomId: getRoomId(),
+        messageType: enums.MessageType.RECALLMESSAGE,//消息类型
+        data: {
+            userId: getUserId(),
+            messageId: messageId,
+            userNick: userNick
         }
     }
     return JSON.stringify(messageInfo)

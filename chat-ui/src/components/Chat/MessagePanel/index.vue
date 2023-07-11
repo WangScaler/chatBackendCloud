@@ -119,10 +119,9 @@
 			</span>
 
 			<!-- info -->
-			<span v-if="item.messageType === 'info'" class="msg">
+			<span v-if="item.messageType === 'tip'" class="msg">
 				{{ item.messageContent }}
 			</span>
-
 			<!-- notice -->
 			<span v-if="item.messageType === 'notice'" class="notice-box">
 				<div class="notice-box-header">
@@ -140,6 +139,7 @@
 import { mapGetters, mapMutations, mapState } from "vuex";
 import { replaceEmotionText } from "@/components/Emotion/emotion.js";
 import { throttle, formatChatTime } from "@/utils/tools";
+import {sendRecallMessage} from "@/utils/message";
 
 export default {
   props: {
@@ -155,7 +155,7 @@ export default {
       unReadNum: 0, // 未读消息条数
       firstNodeId: 0,
       imgMessageType: ["png", "jpg", "jpeg", "gif", "emo"], // emo 是特殊类型的表情包 也属于图片
-      tipsMessageType: ["notice", "info"], // 中间显示的类型 目前有公搞和一些进出切歌房间这类提示
+      tipsMessageType: ["notice",'tip'], // 中间显示的类型 目前有公搞和一些进出切歌房间这类提示
       errAvatar:
         "https://img1.baidu.com/it/u=430660535,1172956011&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
     };
@@ -166,7 +166,7 @@ export default {
     messageClass() {
       return (item) => {
         const { userId, messageType } = item;
-        if (!["info", "notice"].includes(messageType)) {
+        if (!["tip", "notice"].includes(messageType)) {
           return userId === this.mineId ? "mine" : "other";
         }
         return messageType;
@@ -284,10 +284,7 @@ export default {
     handlerMessageCommand(val, message) {
       if (Number(val) === 1) return this.$emit("quoteMessage", message);
       if (Number(val) === 2)
-        return this.$socket.client.emit("recallMessage", {
-          id: message.id,
-          userNick: message.userInfo.userNick,
-        });
+		return this.$socket.sendMsg(sendRecallMessage(message.id, message.userInfo.userNick));
       if (Number(val) === 3) return this.handlerPreBigImg(message);
       if (Number(val) === 4) return this.handlerDownLiad(message);
     },
@@ -550,7 +547,7 @@ export default {
     }
   }
 }
-.info {
+.tip {
   justify-content: center;
   .msg {
     font-size: 12px;

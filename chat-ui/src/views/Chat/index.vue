@@ -241,7 +241,7 @@
                             if (this.mineId.toString() === info.data.userId)
                                 this.getHistoryMessage()
                             this.showTipsJoinRoom &&
-                            this.setMessageDataList({messageType: "info", messageContent: info.data.data});
+                            this.setMessageDataList({messageType: "tip", messageContent: info.data.data});
                             this.setOnlineUserList(info.data.onLineUserList)
                             this.setRoomList(info.data.roomList)
                         })
@@ -250,6 +250,18 @@
                         this.loading = true;
                         this.$nextTick(() => {
                             this.setMessageDataList(info.data);
+                        })
+                        break;
+                    case "tip":
+                        this.loading = true;
+                        this.$nextTick(() => {
+                            this.$message.success(info.data);
+                        })
+                        break;
+                    case "recallMessage":
+                        this.loading = true;
+                        this.$nextTick(() => {
+                            this.updateMessageList(info.data);
                         })
                         break;
                     case "error":

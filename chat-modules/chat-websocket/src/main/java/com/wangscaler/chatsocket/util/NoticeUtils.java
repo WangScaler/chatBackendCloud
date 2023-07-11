@@ -17,10 +17,28 @@ public class NoticeUtils {
         obj.put(WebsocketConst.MSG_DATA, message);
         return obj;
     }
-    //系统通知
+    //多人消息
     public static JSONObject getMessageData(String id,Integer userId, Object message) throws Exception {
         JSONObject obj = new JSONObject();
         obj.put(WebsocketConst.MSG_TYPE, WebsocketConst.NOTICE_ROOM);
+        obj.put(WebsocketConst.MSG_ID, id);
+        obj.put(WebsocketConst.MSG_USER_ID,userId.toString());
+        obj.put(WebsocketConst.MSG_DATA, message);
+        return obj;
+    }
+    //提示信息
+    public static JSONObject getTipData(String id,Integer userId, Object message) throws Exception {
+        JSONObject obj = new JSONObject();
+        obj.put(WebsocketConst.MSG_TYPE, WebsocketConst.NOTICE_TIP);
+        obj.put(WebsocketConst.MSG_ID, id);
+        obj.put(WebsocketConst.MSG_USER_ID,userId.toString());
+        obj.put(WebsocketConst.MSG_DATA, message);
+        return obj;
+    }
+    //撤回信息
+    public static JSONObject getRecallMessageData(String id,Integer userId, Object message) throws Exception {
+        JSONObject obj = new JSONObject();
+        obj.put(WebsocketConst.MSG_TYPE, WebsocketConst.NOTICE_RECALLMESSAGE);
         obj.put(WebsocketConst.MSG_ID, id);
         obj.put(WebsocketConst.MSG_USER_ID,userId.toString());
         obj.put(WebsocketConst.MSG_DATA, message);

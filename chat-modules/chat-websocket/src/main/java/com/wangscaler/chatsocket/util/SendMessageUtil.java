@@ -10,14 +10,14 @@ import com.wangscaler.chatopenfeign.clients.RemoteMessageService;
 import com.wangscaler.chatopenfeign.clients.RemoteRoomService;
 import com.wangscaler.chatopenfeign.clients.RemoteUserService;
 import com.wangscaler.chatopenfeign.domain.Message;
+import com.wangscaler.chatopenfeign.domain.RecallMessage;
 import com.wangscaler.chatopenfeign.domain.Room;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.websocket.WebSocket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 public class SendMessageUtil {
 
@@ -51,10 +51,10 @@ public class SendMessageUtil {
         welcomeMessage.put(WebsocketConst.MSG_USER_ID, userId);
         welcomeMessage.put(WebsocketConst.ONLINE_USERLIST, Static.userService.getAllInfo(allUser).get(RestResult.DATA_TAG));
         List<Object> roomList = (List<Object>) Static.remoteRoomService.findRoomList(new ArrayList<String>(roomPool.keySet())).get(RestResult.DATA_TAG);
-        List<Room>roomListNew = new ArrayList<Room>(roomList.size());
+        List<Room> roomListNew = new ArrayList<Room>(roomList.size());
         for (int i = 0; i < roomList.size(); i++) {
             Room room = new Room();
-            BeanUtil.copyProperties(roomList.get(i),room);
+            BeanUtil.copyProperties(roomList.get(i), room);
             roomListNew.add(room);
         }
         roomListNew.iterator().forEachRemaining(room -> room.setOnLineNums(roomPool.get(String.valueOf(room.getRoomId())).size()));
@@ -75,8 +75,29 @@ public class SendMessageUtil {
     }
 
     /**
-     * 发送欢迎加入房间的通知
-     * sendJoinUser
+     * 发送撤回消息
+     *
+     * @param allUser 通知列表
+     */
+    public static void sendRecallMessage(RecallMessage message, List<String> allUser) throws Exception {
+        String key = IdUtil.fastSimpleUUID();
+        String[] userList = allUser.toArray(new String[allUser.size()]);
+        Object messageInfo = Static.messageService.getMessageById(String.valueOf(message.getMessageId())).get(RestResult.DATA_TAG);
+        Message messageInfoNew = new Message();
+        BeanUtil.copyProperties(messageInfo,messageInfoNew);
+        if (LocalDateTime.now().isAfter(messageInfoNew.getCreatedAt().plus(2, ChronoUnit.MINUTES))) {
+            new SendMessageThread(userList, NoticeUtils.getTipData(key, message.getUserId(), "已超过两分钟不能撤回")).start();
+        } else if (message.getUserId() != messageInfoNew.getUserId()) {
+            new SendMessageThread(new String[]{String.valueOf(message.getUserId())}, NoticeUtils.getTipData(key, message.getUserId(), "非法操作，不可移除他人消息！")).start();
+        } else {
+            Static.messageService.update(messageInfoNew);
+            message.setMsg(message.getUserNick()+"撤回了一条信息!");
+            new SendMessageThread(userList, NoticeUtils.getRecallMessageData(key, message.getUserId(), message)).start();
+        }
+    }
+
+    /**
+     * 发送消息
      */
     public static class SendMessageThread extends Thread {
 

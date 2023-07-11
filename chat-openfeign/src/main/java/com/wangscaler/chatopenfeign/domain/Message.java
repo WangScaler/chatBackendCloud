@@ -1,4 +1,5 @@
 package com.wangscaler.chatopenfeign.domain;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;

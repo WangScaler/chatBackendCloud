@@ -17,6 +17,7 @@ import com.wangscaler.chatcore.constant.SecurityConstants;
 import com.wangscaler.chatcore.constant.WebsocketConst;
 import com.wangscaler.chatcore.util.JWTtokenUtils;
 import com.wangscaler.chatopenfeign.domain.Message;
+import com.wangscaler.chatopenfeign.domain.RecallMessage;
 import com.wangscaler.chatredis.service.RedisService;
 import com.wangscaler.chatsocket.util.SendMessageUtil;
 import io.jsonwebtoken.Claims;
@@ -125,6 +126,9 @@ public class WebSocket {
         if(WebsocketConst.NOTICE_ROOM.equals(messageJson.get(WebsocketConst.MSG_TYPE))){
             Message messageInfo = JSONUtil.toBean((JSONObject) messageJson.get(WebsocketConst.MSG_DATA),Message.class);
             SendMessageUtil.sendRoomMessage(messageInfo, roomPool.get(String.valueOf(messageInfo.getRoomId())));
+        }else if(WebsocketConst.NOTICE_RECALLMESSAGE.equals(messageJson.get(WebsocketConst.MSG_TYPE))){
+            RecallMessage messageInfo = JSONUtil.toBean((JSONObject) messageJson.get(WebsocketConst.MSG_DATA),RecallMessage.class);
+            SendMessageUtil.sendRecallMessage(messageInfo,roomPool.get(String.valueOf(messageJson.get(WebsocketConst.MSG_ROOM_ID))));
         }
         JSONObject obj = new JSONObject();
         //业务类型
