@@ -11,7 +11,7 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 07/07/2023 10:51:53
+ Date: 11/07/2023 15:02:45
 */
 
 SET NAMES utf8mb4;
@@ -43,9 +43,9 @@ CREATE TABLE `tb_collect`  (
 DROP TABLE IF EXISTS `tb_message`;
 CREATE TABLE `tb_message`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
-  `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
-  `deleted_at` datetime(6) NULL DEFAULT NULL COMMENT '删除时间',
+  `created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  `deleted_at` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
   `user_id` int(0) NOT NULL COMMENT '用户id',
   `room_id` int(0) NOT NULL COMMENT '房间ID',
   `message_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -54,12 +54,15 @@ CREATE TABLE `tb_message`  (
   `quote_message_id` int(0) NULL DEFAULT NULL COMMENT '引用的消息ID',
   `message_status` int(0) NOT NULL DEFAULT 1 COMMENT '消息状态： 1: 正常 -1: 已撤回',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45757 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 45778 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_message
 -- ----------------------------
-INSERT INTO `tb_message` VALUES (1, '2021-11-24 14:40:00.625804', '2021-11-24 14:40:00.625804', NULL, 1, 888, 'test', 'text', NULL, NULL, 1);
+INSERT INTO `tb_message` VALUES (1, '2023-07-11 14:59:59', '2023-07-11 14:59:59', NULL, 2, 888, 'test', 'text', NULL, NULL, 1);
+INSERT INTO `tb_message` VALUES (2, '2023-07-11 15:00:19', '2023-07-11 15:00:19', NULL, 1, 888, '[西瓜]', 'text', 2, 1, 1);
+INSERT INTO `tb_message` VALUES (3, '2023-07-11 15:00:32', '2023-07-11 15:00:50', NULL, 2, 888, '[菜刀]', 'text', NULL, NULL, -1);
+INSERT INTO `tb_message` VALUES (4, '2023-07-11 15:00:42', '2023-07-11 15:00:42', NULL, 1, 888, '[衰]', 'text', 2, 3, 1);
 
 -- ----------------------------
 -- Table structure for tb_music
@@ -501,7 +504,7 @@ CREATE TABLE `tb_user`  (
 -- Records of tb_user
 -- ----------------------------
 INSERT INTO `tb_user` VALUES (1, '2023-07-03 15:22:11.770291', '2023-07-06 16:47:21.888149', NULL, 'test', 'test', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@163.com', 'https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 'viewer', NULL, NULL, '每个人都有签名、我希望你也有...');
-INSERT INTO `tb_user` VALUES (2, '2023-07-05 16:44:45.033393', '2023-07-07 10:51:25.997693', NULL, 'wang', 'wang', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@qq.com', 'https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 'viewer', NULL, NULL, '每个人都有签名、我希望你也有...');
+INSERT INTO `tb_user` VALUES (2, '2023-07-05 16:44:45.033393', '2023-07-10 15:00:42.730627', NULL, 'wangscaler', 'wang', '391d86f10f63bf80c3294fb4a99ee3bd', 1, 1, 'wangscaler@qq.com', 'https://img1.baidu.com/it/u=1738531146,3909274171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 'viewer', NULL, NULL, '每个人都有签名、我希望你也有...');
 
 -- ----------------------------
 -- Table structure for undo_log
